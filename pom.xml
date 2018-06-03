@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    fassets - Project for light-weight tracking of fixed assets
+    Copyright © 2018 Edwin Njeru (mailnjeru@gmail.com)
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.scalified.tree</groupId>
+    <artifactId>scalified-tree</artifactId>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+
+    <name>scalified-tree</name>
+    <inceptionYear>2018</inceptionYear>
+    <description>Implementation of tree structures in java</description>
+
+    <properties>
+        <!--General-->
+        <build.profile.id>all-tests</build.profile.id>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <surefireArgLine>-Dapp.env=LOCAL -Dapp.domain=localhost </surefireArgLine>
+        <failsafeArgLine>-Dapp.env=LOCAL -Dapp.domain=localhost </failsafeArgLine>
+        <project.reporting.outputDirectory>"documentation"</project.reporting.outputDirectory>
+        <changelog.template.file>${project.basedir}/config/changelog.mustache</changelog.template.file>
+        <maven.compiler.fork>true</maven.compiler.fork>
+        <maven.enforcer.required.maven.version>3.5.0</maven.enforcer.required.maven.version>
+
+        <!--Plugin versions-->
+        <git-changelog-maven-plugin.version>1.54</git-changelog-maven-plugin.version>
+        <spotbugs-maven-plugin.version>3.1.0-RC6</spotbugs-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
+        <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
+        <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
+        <maven-javadoc-plugin.version>3.0.0-M1</maven-javadoc-plugin.version>
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
+        <maven-pmd-plugin.version>3.9.0</maven-pmd-plugin.version>
+        <maven-surefire-report-plugin.version>2.20.1</maven-surefire-report-plugin.version>
+        <copy-maven-plugin.version>0.2.5</copy-maven-plugin.version>
+        <codehaus.license.maven.plugin.version>1.16</codehaus.license.maven.plugin.version>
+
+        <!--Mycila License plugin-->
+        <mycila.license.maven.plugin.version>3.0</mycila.license.maven.plugin.version>
+        <license.header.location>com/mycila/maven/plugin/license/templates/GPL-3.txt</license.header.location>
+        <license.maven.owner>scalified-tree controbutors</license.maven.owner>
+        <license.maven.email>mailnjeru@gmail.com</license.maven.email>
+
+        <!-- Properties for maven-checkstyle-plugin -->
+        <checkstyle.config.location>${project.basedir}/config/checkstyle.xml</checkstyle.config.location>
+        <checkstyle.config.headerLocation>${project.basedir}/config/license_header.txt</checkstyle.config.headerLocation>
+        <checkstyle.config.maxAllowedViolations>3</checkstyle.config.maxAllowedViolations>
+        <checkstyle.config.consoleOutput>true</checkstyle.config.consoleOutput>
+        <checkstyle.config.failsOnError>true</checkstyle.config.failsOnError>
+        <checkstyle.config.includeResources>false</checkstyle.config.includeResources>
+        <checkstyle.config.includeTestResources>false</checkstyle.config.includeTestResources>
+        <checkstyle.config.includeTestResources>false</checkstyle.config.includeTestResources>
+        <checkstyle.config.includeTestSourceDirectory>false</checkstyle.config.includeTestSourceDirectory>
+        <linkXRef>false</linkXRef>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>all-tests</id>
+            <properties>
+                <build.profile.id>all-tests</build.profile.id>
+                <!-- All tests are run. -->
+                <skip.integration.tests>false</skip.integration.tests>
+                <skip.unit.tests>false</skip.unit.tests>
+            </properties>
+        </profile>
+        <profile>
+            <id>no-tests</id>
+            <properties>
+                <!-- Used to locate the profile specific configuration file. -->
+                <build.profile.id>integration-test</build.profile.id>
+                <!-- Only integration tests are run. -->
+                <skip.integration.tests>true</skip.integration.tests>
+                <skip.unit.tests>true</skip.unit.tests>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.2.0</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!--Setup maven compiler plugin, inorder to control java version-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <fork>${maven.compiler.fork}</fork>
+                </configuration>
+            </plugin>
+
+            <!--Setup resources plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <!--Setup failSafe plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <executions>
+                    <!--
+                        Ensures that both integration-test and verify goals of the Failsafe Maven
+                        plugin are executed.
+                    -->
+                    <execution>
+                        <id>integration-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the VM argument line used when integration tests are run. -->
+                            <argLine>${failsafeArgLine}</argLine>
+
+                            <!--
+                                Skips integration tests if the value of skip.integration.tests property
+                                is true
+                            -->
+                            <skipTests>${it.skip}</skipTests>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Setup surefire plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- Sets the VM argument line used when unit tests are run. -->
+                    <argLine>${surefireArgLine}</argLine>
+                    <!-- Skips unit tests if the value of skip.unit.tests property is true -->
+                    <skipTests>${skip.unit.tests}</skipTests>
+                    <!-- Excludes integration tests when unit tests are run. -->
+                    <excludes>
+                        <exclude>**/IT*.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- Setup cobertura plugin-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <outputDirectory>${basedir}/target</outputDirectory>
+                    <format>xml</format>
+                    <maxmem>256m</maxmem>
+                    <!-- aggregated reports for multi-module projects -->
+                    <aggregate>true</aggregate>
+                    <check/>
+                </configuration>
+            </plugin>
+
+            <!-- Print the change log as release notes...-->
+            <!--Run mvn generate-sources, to use-->
+            <plugin>
+                <groupId>se.bjurr.gitchangelog</groupId>
+                <artifactId>git-changelog-maven-plugin</artifactId>
+                <version>${git-changelog-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>GenerateGitChangelog</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>git-changelog</goal>
+                        </goals>
+                        <configuration>
+                            <!-- A file on filesystem //-->
+                            <file>CHANGELOG.md</file>
+                            <templateFile>${changelog.template.file}</templateFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Enforce Maven 3.5.0 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>${maven.enforcer.required.maven.version}</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Setup Checkstyle, excluding module-info -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <!--Could run with mvn clean verify-->
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>run-checkstyle</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludes>module-info.java</excludes>
+                    <headerLocation>${checkstyle.config.headerLocation}</headerLocation>
+                    <maxAllowedViolations>${checkstyle.config.maxAllowedViolations}</maxAllowedViolations>
+                    <configLocation>${checkstyle.config.location}</configLocation>
+                    <consoleOutput>${checkstyle.config.consoleOutput}</consoleOutput>
+                    <failsOnError>${checkstyle.config.failsOnError}</failsOnError>
+                    <includeResources>${checkstyle.config.includeResources}</includeResources>
+                    <includeTestResources>${checkstyle.config.includeTestResources}</includeTestResources>
+                    <includeTestSourceDirectory>${checkstyle.config.includeTestSourceDirectory}</includeTestSourceDirectory>
+                    <linkXRef>${linkXRef}</linkXRef>
+                </configuration>
+            </plugin>
+            <!-- Setup Javadoc jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Setup source jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Setup spotbugs dependency, would normally only be in reporting section -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>spotbugs</id>
+                        <goals><goal>spotbugs</goal></goals>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs</artifactId>
+                        <version>3.1.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!-- Setup JaCoCo code coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-site</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Setup scaffolding mycila license maven plugin-->
+            <!--Use with mvn "mvn license:check", "mvn license:format" & "mvn license:remove"-->
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>${mycila.license.maven.plugin.version}</version>
+                <configuration>
+                    <header>${license.header.location}</header>
+                    <properties>
+                        <owner>${license.maven.owner}</owner>
+                        <email>${license.maven.email}</email>
+                    </properties>
+                    <excludes>
+                        <exclude>**/README</exclude>
+                        <exclude>**/CHANGELOG.md</exclude>
+                        <exclude>**/LICENSE</exclude>
+                        <exclude>**/assets/**</exclude>
+                        <exclude>**/.idea/**</exclude>
+                        <exclude>**/.mvn/**</exclude>
+                        <exclude>**/.okhttpcache/**</exclude>
+                        <exclude>**/target/**</exclude>
+                        <exclude>src/test/resources/**</exclude>
+                        <exclude>src/main/resources/**</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Setup codehaus mojo license management plugin-->
+            <!-- Invocation by 'mvn package'-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>${codehaus.license.maven.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>download-licenses</id>
+                        <goals>
+                            <goal>download-licenses</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <!-- Setup standard project info reports -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven-project-info-reports-plugin.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependencies</report>
+                            <report>dependency-info</report>
+                            <report>issue-tracking</report>
+                            <report>license</report>
+                            <report>project-team</report>
+                            <report>scm</report>
+                            <report>summary</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <!-- Setup Checkstyle report, excluding module-info -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+                <configuration>
+                    <excludes>module-info.java</excludes>
+                    <headerLocation>${checkstyle.config.headerLocation}</headerLocation>
+                    <maxAllowedViolations>${checkstyle.config.maxAllowedViolations}</maxAllowedViolations>
+                    <configLocation>${checkstyle.config.location}</configLocation>
+                    <consoleOutput>${checkstyle.config.consoleOutput}</consoleOutput>
+                    <failsOnError>${checkstyle.config.failsOnError}</failsOnError>
+                    <includeResources>${checkstyle.config.includeResources}</includeResources>
+                    <includeTestResources>${checkstyle.config.includeTestResources}</includeTestResources>
+                    <includeTestSourceDirectory>${checkstyle.config.includeTestSourceDirectory}</includeTestSourceDirectory>
+                    <linkXRef>${linkXRef}</linkXRef>
+                </configuration>
+            </plugin>
+            <!-- Setup Javadoc report -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <!-- Setup Surefire report -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>${maven-surefire-report-plugin.version}</version>
+                <configuration>
+                    <showSuccess>true</showSuccess>
+                </configuration>
+            </plugin>
+            <!-- Setup PMD report, excluding module-info -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${maven-pmd-plugin.version}</version>
+                <configuration>
+                    <minimumTokens>100</minimumTokens>
+                    <targetJdk>${maven.compiler.target}</targetJdk>
+                    <excludes>
+                        <exclude>module-info.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <!-- Setup spotbugs report -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs-maven-plugin.version}</version>
+            </plugin>
+            <!-- Setup JaCoCo report -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <developers>
+        <developer>
+            <email>mailnjeru@gmail.com</email>
+            <name>Edwin Njeru</name>
+        </developer>
+    </developers>
+
+</project>

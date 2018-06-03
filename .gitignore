@@ -1,0 +1,8 @@
+.idea
+.gradle
+build
+tree/out/
+gradle/wrapper/
+
+.metadata
+*.DS_Store
