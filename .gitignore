@@ -2,6 +2,7 @@
 .gradle
 build
 tree/out/
+target/
 gradle/wrapper/
 
 .metadata
