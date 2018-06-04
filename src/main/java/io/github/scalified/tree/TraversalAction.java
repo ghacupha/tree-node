@@ -1,5 +1,5 @@
-/*
- * Copyright 2016 Scalified <http://www.scalified.com>
+/**
+ * Copyright © 2018 Edwin Njeru (mailnjeru@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.github.scalified.tree;
 
 /**
@@ -26,19 +25,19 @@ package io.github.scalified.tree;
  */
 public interface TraversalAction<T extends TreeNode> {
 
-	/**
-	 * Is called on each node, while traversing the tree
-	 *
-	 * @param node reference to the current node during tree traversal
-	 */
-	void perform(T node);
+    /**
+     * Is called on each node, while traversing the tree
+     *
+     * @param node reference to the current node during tree traversal
+     */
+    void perform(T node);
 
-	/**
-	 * Checks whether the traversal is completed and no more required
-	 *
-	 * @return {@code true} if traversal is completed and no more required,
-	 *         {@code false} otherwise
-	 */
-	boolean isCompleted();
+    /**
+     * Checks whether the traversal is completed and no more required
+     *
+     * @return {@code true} if traversal is completed and no more required,
+     * {@code false} otherwise
+     */
+    boolean isCompleted();
 
 }

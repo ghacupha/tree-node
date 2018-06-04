@@ -1,5 +1,5 @@
-/*
- * Copyright 2016 Scalified <http://www.scalified.com>
+/**
+ * Copyright © 2018 Edwin Njeru (mailnjeru@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.github.scalified.tree;
 
 /**
@@ -26,28 +25,28 @@ package io.github.scalified.tree;
  */
 public class TreeNodeException extends RuntimeException {
 
-	/**
-	 * Constructs a new tree node exception with the specified detail message
-	 *
-	 * @param message the detail message. The detail message is saved for
-	 *                later retrieval by the {@link #getMessage()} method
-	 */
-	public TreeNodeException(String message) {
-		super(message);
-	}
+    /**
+     * Constructs a new tree node exception with the specified detail message
+     *
+     * @param message the detail message. The detail message is saved for
+     *                later retrieval by the {@link #getMessage()} method
+     */
+    public TreeNodeException(String message) {
+        super(message);
+    }
 
-	/**
-	 * Constructs a new tree node exception with the specified detail message and cause
-	 *
-	 * @param message the detail message. The detail message is saved for
-	 *                later retrieval by the {@link #getMessage()} method
-	 * @param  cause the cause (which is saved for later retrieval by the
-	 *               {@link #getCause()} method). A {@code null} value is
-	 *               permitted, and indicates that the cause is nonexistent
-	 *               or unknown
-	 */
-	public TreeNodeException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * Constructs a new tree node exception with the specified detail message and cause
+     *
+     * @param message the detail message. The detail message is saved for
+     *                later retrieval by the {@link #getMessage()} method
+     * @param cause   the cause (which is saved for later retrieval by the
+     *                {@link #getCause()} method). A {@code null} value is
+     *                permitted, and indicates that the cause is nonexistent
+     *                or unknown
+     */
+    public TreeNodeException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

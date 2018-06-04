@@ -1,5 +1,5 @@
-/*
- * Copyright 2016 Scalified <http://www.scalified.com>
+/**
+ * Copyright © 2018 Edwin Njeru (mailnjeru@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.github.scalified.tree.multinode;
 
 import io.github.scalified.tree.TraversalAction;
 import io.github.scalified.tree.TreeNode;
 import io.github.scalified.tree.TreeNodeException;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -115,7 +117,7 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
 		Collection<TreeNode<T>> subtrees =
 			IntStream.range(0, subtreesSize)
 				.mapToObj(i -> (TreeNode<T>) this.subtrees[i])
-				.collect(Collectors.toCollection(() -> new LinkedHashSet<>(subtreesSize)));
+				.collect(Collectors.toCollection(() -> Collections.synchronizedSet( new LinkedHashSet<>(subtreesSize))));
 		return subtrees;
 	}
 
@@ -518,7 +520,7 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
             IntStream.range(0, parentSubtreesSize)
                 .mapToObj(i -> (MultiTreeNode<T>) parentSubtreeObjects[i])
                 .filter(parentSubtree -> !parentSubtree.equals(this))
-            .collect(Collectors.toCollection(() -> new LinkedHashSet<>(parentSubtreesSize - 1)));
+            .collect(toSafeSet(parentSubtreesSize -1 ));
         return siblings;
 	}
 
