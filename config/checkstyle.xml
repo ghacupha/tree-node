@@ -147,7 +147,7 @@
   </module>
   <!-- Header inlined due to m2e-->
   <module name="RegexpHeader">
-    <property name="header" value="^/\*[*]?\n^ \* fassets - Project for light-weight tracking of fixed assets"/>
+    <property name="header" value="^/\*[*]?\n^ * Copyright © 2018 Edwin Njeru (mailnjeru@gmail.com)"/>
     <property name="fileExtensions" value="java"/>
     <property name="severity" value="error"/>
   </module>
