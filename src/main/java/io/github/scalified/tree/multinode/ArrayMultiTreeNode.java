@@ -516,11 +516,13 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
 			return Collections.emptySet();
 		}
 		Object[] parentSubtreeObjects = mParent.subtrees;
+
         Collection<MultiTreeNode<T>> siblings =
             IntStream.range(0, parentSubtreesSize)
                 .mapToObj(i -> (MultiTreeNode<T>) parentSubtreeObjects[i])
                 .filter(parentSubtree -> !parentSubtree.equals(this))
             .collect(toSafeSet(parentSubtreesSize -1 ));
+
         return siblings;
 	}
 
