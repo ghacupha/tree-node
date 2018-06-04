@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -183,12 +184,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
         if (collection == null || collection.isEmpty()) {
             return false;
         }
-        for (T item : collection) {
-            if (item != null) {
-                return true;
-            }
-        }
-        return false;
+        return collection.stream().anyMatch(Objects::nonNull);
     }
 
     /**
