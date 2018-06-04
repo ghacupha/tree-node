@@ -1,5 +1,5 @@
 /**
- * Copyright © 2018 scalified-tree contributors (info@scalified.com, http://www.scalified.com, mailnjeru@gmail.com)
+ * Copyright © 2018 Edwin Njeru (mailnjeru@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,7 @@
 package io.github.scalified.tree.multinode;
 
 import io.github.scalified.tree.TreeNode;
-import io.github.scalified.tree.TreeNodeTest;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.Test;
 
 /**
  * @author shell
@@ -28,39 +25,36 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public class ArrayMultiTreeNodeTest extends MultiTreeNodeTest {
 
-    /*
-     * Test tree structure
-     *
-     *   +- root(ROOT_DATA)
-     *      +- node_1(NODE_DATA_1)
-     *      +- node_2(NODE_DATA_2)
-     *      |  +- node_3(NODE_DATA_3)
-     *      |  |  +- node_4(NODE_DATA_4)
-     *      |  |  +- node_5(NODE_DATA_1)
-     *      |  |  |  +- node6 (NODE_DATA4)
-     *      |  +- node_7(null)
-     *      |  +- node_8(NODE_DATA_1)
-     *      +- node9(NODE_DATA_4)
-     *      |  +- node10(null)
-     *
-     */
+	/*
+	 * Test tree structure
+	 *
+	 *   +- root(ROOT_DATA)
+	 *      +- node_1(NODE_DATA_1)
+	 *      +- node_2(NODE_DATA_2)
+	 *      |  +- node_3(NODE_DATA_3)
+	 *      |  |  +- node_4(NODE_DATA_4)
+	 *      |  |  +- node_5(NODE_DATA_1)
+	 *      |  |  |  +- node6 (NODE_DATA4)
+	 *      |  +- node_7(null)
+	 *      |  +- node_8(NODE_DATA_1)
+	 *      +- node9(NODE_DATA_4)
+	 *      |  +- node10(null)
+	 *
+	 */
 
-    @Override
-    protected <T> TreeNode<T> createTreeNode(T data) {
-        return new ArrayMultiTreeNode<>(data);
-    }
+	@Override
+	protected <T> TreeNode<T> createTreeNode(T data) {
+		return new ArrayMultiTreeNode<>(data);
+	}
 
-    private static <T> TreeNode<T> createTreeNode(T data, int branchingFactor) {
-        return new ArrayMultiTreeNode<>(data, branchingFactor);
-    }
+	private static <T> TreeNode<T> createTreeNode(T data, int branchingFactor) {
+		return new ArrayMultiTreeNode<>(data, branchingFactor);
+	}
 
-    @Test
-    public void testIncorrectBranchingFactor() {
-        int incorrectBranchingFactor = -10;
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            createTreeNode(TreeNodeTest.ROOT_DATA, incorrectBranchingFactor);
-        });
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void testIncorrectBranchingFactor() {
+		int incorrectBranchingFactor = -10;
+		createTreeNode(ROOT_DATA, incorrectBranchingFactor);
+	}
 
 }

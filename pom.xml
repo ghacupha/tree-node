@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright © 2018 scalified-tree contributors (info@scalified.com, http://www.scalified.com, mailnjeru@gmail.com)
+    Copyright © 2018 Edwin Njeru (mailnjeru@gmail.com)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@
         <changelog.template.file>${project.basedir}/config/changelog.mustache</changelog.template.file>
         <maven.compiler.fork>true</maven.compiler.fork>
         <maven.enforcer.required.maven.version>3.5.0</maven.enforcer.required.maven.version>
+        <it.skip>false</it.skip>
 
         <!--Plugin versions-->
         <git-changelog-maven-plugin.version>1.54</git-changelog-maven-plugin.version>
@@ -58,11 +59,12 @@
         <copy-maven-plugin.version>0.2.5</copy-maven-plugin.version>
         <codehaus.license.maven.plugin.version>1.16</codehaus.license.maven.plugin.version>
 
+
         <!--Mycila License plugin-->
         <mycila.license.maven.plugin.version>3.0</mycila.license.maven.plugin.version>
         <license.header.location>com/mycila/maven/plugin/license/templates/APACHE-2.txt</license.header.location>
-        <license.maven.owner>scalified-tree contributors</license.maven.owner>
-        <license.maven.email>info@scalified.com, http://www.scalified.com, mailnjeru@gmail.com </license.maven.email>
+        <license.maven.owner>Edwin Njeru</license.maven.owner>
+        <license.maven.email>mailnjeru@gmail.com</license.maven.email>
 
         <!-- Properties for maven-checkstyle-plugin -->
         <checkstyle.config.location>${project.basedir}/config/checkstyle.xml</checkstyle.config.location>
@@ -100,14 +102,13 @@
     </profiles>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.2.0</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>

@@ -1,5 +1,5 @@
 ====
-    Copyright © 2018 scalified-tree contributors (info@scalified.com, http://www.scalified.com, mailnjeru@gmail.com)
+    Copyright © 2018 Edwin Njeru (mailnjeru@gmail.com)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

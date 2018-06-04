@@ -1,5 +1,5 @@
 /**
- * Copyright © 2018 scalified-tree contributors (info@scalified.com, http://www.scalified.com, mailnjeru@gmail.com)
+ * Copyright © 2018 Edwin Njeru (mailnjeru@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,14 @@
  */
 package io.github.scalified.tree.multinode;
 
-import io.github.scalified.tree.TreeNodeTest;
 import io.github.scalified.tree.TreeNode;
 import io.github.scalified.tree.TreeNodeException;
-import org.junit.jupiter.api.Test;
+import io.github.scalified.tree.TreeNodeTest;
+import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author shell
@@ -64,18 +61,16 @@ public abstract class MultiTreeNodeTest extends TreeNodeTest {
 		mSiblingsLevel2.add(node3);
 		mSiblingsLevel2.add(node7);
 
-		assertEquals(mSiblingsLevel1, ((MultiTreeNode<String>) node1).siblings(), message);
-		assertEquals(mSiblingsLevel2, ((MultiTreeNode<String>) node8).siblings(), message);
+		assertEquals(message, mSiblingsLevel1, ((MultiTreeNode<String>) node1).siblings());
+		assertEquals(message, mSiblingsLevel2, ((MultiTreeNode<String>) node8).siblings());
 
-		assertEquals(Collections.emptySet(), ((MultiTreeNode<String>) node6).siblings(), message);
+		assertEquals(message, Collections.emptySet(), ((MultiTreeNode<String>) node6).siblings());
 	}
 
-	@Test
+	@Test(expected = TreeNodeException.class)
 	public void testSiblingsRootNodeException() {
 		// Test the root node sibling call throws exception
-		assertThrows(TreeNodeException.class, () ->{
-			((MultiTreeNode<String>) root).siblings();
-		});
+		((MultiTreeNode<String>) root).siblings();
 	}
 
 	@Test
@@ -91,17 +86,20 @@ public abstract class MultiTreeNodeTest extends TreeNodeTest {
 		mSubtreesToAdd.add(nodeToAdd1);
 		mSubtreesToAdd.add(nodeToAdd2);
 		mSubtreesToAdd.add(nodeToAdd3);
-		assertTrue(((MultiTreeNode<String>) node7).addSubtrees(mSubtreesToAdd), messageAddResultTrueExpected);
-		assertTrue(node7.hasSubtree(nodeToAdd1), messageAddExpected);
-		assertTrue(node7.hasSubtree(nodeToAdd2), messageAddExpected);
-		assertTrue(node7.hasSubtree(nodeToAdd3), messageAddExpected);
+		assertTrue(messageAddResultTrueExpected, ((MultiTreeNode<String>) node7).addSubtrees(mSubtreesToAdd));
+		assertTrue(messageAddExpected, node7.hasSubtree(nodeToAdd1));
+		assertTrue(messageAddExpected, node7.hasSubtree(nodeToAdd2));
+		assertTrue(messageAddExpected, node7.hasSubtree(nodeToAdd3));
 
 		// Test the specified tree nodes are not added
 		String messageAddResultFalseExpected =
 				"The tree nodes addition result was expected to be false, but actually was true";
-		assertFalse(((MultiTreeNode<String>) node8).addSubtrees(null), messageAddResultFalseExpected);
-		assertFalse(((MultiTreeNode<String>) node1).addSubtrees(Collections.singletonList(null)), messageAddResultFalseExpected);
-		assertFalse(((MultiTreeNode<String>) node10).addSubtrees(Collections.emptyList()), messageAddResultFalseExpected);
+		assertFalse(messageAddResultFalseExpected,
+				((MultiTreeNode<String>) node8).addSubtrees(null));
+		assertFalse(messageAddResultFalseExpected,
+				((MultiTreeNode<String>) node1).addSubtrees(Collections.singletonList(null)));
+		assertFalse(messageAddResultFalseExpected,
+				((MultiTreeNode<String>) node10).addSubtrees(Collections.emptyList()));
 	}
 
 	@Test
@@ -112,16 +110,16 @@ public abstract class MultiTreeNodeTest extends TreeNodeTest {
 		Collection<MultiTreeNode<String>> mSubtreesContain1 = new ArrayList<>(2);
 		mSubtreesContain1.add((MultiTreeNode<String>) node2);
 		mSubtreesContain1.add((MultiTreeNode<String>) node9);
-		assertTrue(((MultiTreeNode<String>) root).hasSubtrees(mSubtreesContain1), messageContains);
+		assertTrue(messageContains, ((MultiTreeNode<String>) root).hasSubtrees(mSubtreesContain1));
 
 		Collection<MultiTreeNode<String>> mSubtreesContain2 = new ArrayList<>(3);
 		mSubtreesContain2.add((MultiTreeNode<String>) node3);
 		mSubtreesContain2.add((MultiTreeNode<String>) node7);
 		mSubtreesContain2.add((MultiTreeNode<String>) node8);
-		assertTrue(((MultiTreeNode<String>) node2).hasSubtrees(mSubtreesContain2), messageContains);
+		assertTrue(messageContains, ((MultiTreeNode<String>) node2).hasSubtrees(mSubtreesContain2));
 
 		List<MultiTreeNode<String>> mSubtreesContain3 = Collections.singletonList((MultiTreeNode<String>) node6);
-		assertTrue(((MultiTreeNode<String>) node5).hasSubtrees(mSubtreesContain3), messageContains);
+		assertTrue(messageContains, ((MultiTreeNode<String>) node5).hasSubtrees(mSubtreesContain3));
 
 		// Test the current tree node does not contain at least one of the the specified subtrees
 		String messageNotContains =
@@ -132,17 +130,19 @@ public abstract class MultiTreeNodeTest extends TreeNodeTest {
 		mSubtreesNotContain1.add((MultiTreeNode<String>) node7);
 		mSubtreesNotContain1.add((MultiTreeNode<String>) node8);
 		mSubtreesNotContain1.add((MultiTreeNode<String>) node4);
-		assertFalse(((MultiTreeNode<String>) root).hasSubtrees(mSubtreesNotContain1), messageNotContains);
+		assertFalse(messageNotContains, ((MultiTreeNode<String>) root).hasSubtrees(mSubtreesNotContain1));
 
 		Collection<MultiTreeNode<String>> mSubtreesNotContain2 = new ArrayList<>(2);
 		mSubtreesNotContain2.add((MultiTreeNode<String>) node5);
 		mSubtreesNotContain2.add((MultiTreeNode<String>) anotherNode);
-		assertFalse(((MultiTreeNode<String>) node3).hasSubtrees(mSubtreesNotContain2), messageNotContains);
+		assertFalse(messageNotContains, ((MultiTreeNode<String>) node3).hasSubtrees(mSubtreesNotContain2));
 
-		assertFalse(((MultiTreeNode<String>) node1).hasSubtrees(mSubtreesContain1), messageNotContains);
-		assertFalse(((MultiTreeNode<String>) node2).hasSubtrees(null), messageNotContains);
-		assertFalse(((MultiTreeNode<String>) node2).hasSubtrees(Collections.emptyList()), messageNotContains);
-		assertFalse(((MultiTreeNode<String>) node2).hasSubtrees(Collections.singletonList(null)), messageNotContains);
+		assertFalse(messageNotContains, ((MultiTreeNode<String>) node1).hasSubtrees(mSubtreesContain1));
+		assertFalse(messageNotContains, ((MultiTreeNode<String>) node2).hasSubtrees(null));
+		assertFalse(messageNotContains,
+				((MultiTreeNode<String>) node2).hasSubtrees(Collections.emptyList()));
+		assertFalse(messageNotContains,
+				((MultiTreeNode<String>) node2).hasSubtrees(Collections.singletonList(null)));
 	}
 
 	@Test
@@ -154,23 +154,26 @@ public abstract class MultiTreeNodeTest extends TreeNodeTest {
 		mSubtreesToRemove1.add((MultiTreeNode<String>) node3);
 		mSubtreesToRemove1.add((MultiTreeNode<String>) node7);
 		mSubtreesToRemove1.add((MultiTreeNode<String>) node8);
-		assertTrue(((MultiTreeNode<String>) node2).dropSubtrees(mSubtreesToRemove1), messageRemoveResultTrue);
-		assertFalse(node2.hasSubtree(node3), messageRemoveExpected);
-		assertFalse(node2.hasSubtree(node7), messageRemoveExpected);
-		assertFalse(node2.hasSubtree(node8), messageRemoveExpected);
+		assertTrue(messageRemoveResultTrue, ((MultiTreeNode<String>) node2).dropSubtrees(mSubtreesToRemove1));
+		assertFalse(messageRemoveExpected, node2.hasSubtree(node3));
+		assertFalse(messageRemoveExpected, node2.hasSubtree(node7));
+		assertFalse(messageRemoveExpected, node2.hasSubtree(node8));
 
 		Collection<MultiTreeNode<String>> mSubtreesToRemove2 = new ArrayList<>(2);
 		mSubtreesToRemove2.add((MultiTreeNode<String>) node9);
 		mSubtreesToRemove2.add((MultiTreeNode<String>) anotherNode);
-		assertTrue(((MultiTreeNode<String>) root).dropSubtrees(mSubtreesToRemove2), messageRemoveResultTrue);
-		assertFalse(root.contains(node9), messageRemoveExpected);
+		assertTrue(messageRemoveResultTrue, ((MultiTreeNode<String>) root).dropSubtrees(mSubtreesToRemove2));
+		assertFalse(messageRemoveExpected, root.contains(node9));
 
 		// Test the specified tree nodes are not removed from the current tree node
 		String messageRemoveResultFalse =
 				"The subtrees removal result was expected to be false, but actually was true";
-		assertFalse(((MultiTreeNode<String>) node1).dropSubtrees(Collections.singletonList((MultiTreeNode<String>) node2)), messageRemoveResultFalse);
-		assertFalse(((MultiTreeNode<String>) root).dropSubtrees(Collections.emptyList()), messageRemoveResultFalse);
-		assertFalse(((MultiTreeNode<String>) node1).dropSubtrees(Collections.singletonList(null)), messageRemoveResultFalse);
+		assertFalse(messageRemoveResultFalse,
+				((MultiTreeNode<String>) node1).dropSubtrees(Collections.singletonList((MultiTreeNode<String>) node2)));
+		assertFalse(messageRemoveResultFalse,
+				((MultiTreeNode<String>) root).dropSubtrees(Collections.emptyList()));
+		assertFalse(messageRemoveResultFalse,
+				((MultiTreeNode<String>) node1).dropSubtrees(Collections.singletonList(null)));
 	}
 
 }
