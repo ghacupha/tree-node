@@ -18,15 +18,18 @@ package io.github.scalified.tree;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
@@ -260,6 +263,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      *
      * @return an iterator over the elements in this tree in proper sequence
      */
+    @Nullable
     public abstract TreeNodeIterator iterator();
 
     /**
@@ -371,10 +375,9 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      */
     public Collection<? extends TreeNode<T>> findAll(final T data) {
         if (isLeaf()) {
-            return (data() == null ? data == null : data().equals(data)) ? Collections.singleton(this) : Collections.<TreeNode<T>>emptySet();
+            return (data() == null ? data == null : data().equals(data)) ? Collections.singleton(this) : Collections.emptySet();
         }
-        // TODO use concurrent collection
-        final Collection<TreeNode<T>> searchedNodes = Sets.newConcurrentHashSet();
+        final Collection<TreeNode<T>> searchedNodes = Collections.newSetFromMap(new ConcurrentHashMap<>());
         traversePreOrder(new TraversalAction<TreeNode<T>>() {
             @Override
             public void perform(TreeNode<T> node) {

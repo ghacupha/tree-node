@@ -20,6 +20,7 @@ import io.github.scalified.tree.TraversalAction;
 import io.github.scalified.tree.TreeNode;
 import io.github.scalified.tree.TreeNodeException;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -183,6 +184,7 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      * @return an iterator over the elements in this tree in proper sequence
      */
     @Override
+    @Nullable
     public TreeNodeIterator iterator() {
         return new TreeNodeIterator() {
 
