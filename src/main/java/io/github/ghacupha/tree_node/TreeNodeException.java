@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.ghacupha.tree.node;
+package io.github.ghacupha.tree_node;
 
 /**
  * The class is responsible for different exceptional cases,

@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.ghacupha.tree.node.multinode;
+package io.github.ghacupha.tree_node.multinode;
 
-import io.github.ghacupha.tree.node.TreeNode;
-import io.github.ghacupha.tree.node.TreeNodeException;
-import io.github.ghacupha.tree.node.TreeNodeTest;
+import io.github.ghacupha.tree_node.TreeNode;
+import io.github.ghacupha.tree_node.TreeNodeException;
+import io.github.ghacupha.tree_node.TreeNodeTest;
 import org.junit.Test;
 
 import java.util.*;

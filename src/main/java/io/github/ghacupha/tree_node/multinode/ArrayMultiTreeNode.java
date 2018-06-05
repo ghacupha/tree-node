@@ -15,25 +15,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.ghacupha.tree.node.multinode;
+package io.github.ghacupha.tree_node.multinode;
 
-
-import io.github.ghacupha.tree.node.TraversalAction;
-import io.github.ghacupha.tree.node.TreeNode;
-import io.github.ghacupha.tree.node.TreeNodeException;
+import io.github.ghacupha.tree_node.TraversalAction;
+import io.github.ghacupha.tree_node.TreeNode;
+import io.github.ghacupha.tree_node.TreeNodeException;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Implementation of the K-ary (multi node) tree data structure,
- * based on the leftmost-child-right-sibling representation
+ * based on the resizable array representation
  *
  * @param <T> Type of data being carried in the node
  */
-public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
+public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
 
     /**
      * Current UID of this object used for serialization
@@ -41,30 +43,57 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * A reference to the first subtree tree node of the current tree node
+     * Default initial branching factor, that is the number of subtrees
+     * this node can have before getting resized
      */
-    private LinkedMultiTreeNode<T> leftMostNode;
+    private static final int DEFAULT_BRANCHING_FACTOR = 10;
 
     /**
-     * A reference to the right sibling tree node of the current tree node
+     * The maximum size of array to allocate.
+     * Some VMs reserve some header words in an array.
+     * Attempts to allocate larger arrays may mResult in
+     * OutOfMemoryError: Requested array size exceeds VM limit
      */
-    private LinkedMultiTreeNode<T> rightSiblingNode;
+    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+    /**
+     * Current branching factor of the current tree node
+     */
+    private final int branchingFactor;
+    /**
+     * Array, which holds the references to the current tree node subtrees
+     */
+    private Object[] subtrees;
+    /**
+     * Number of subtrees currently present in the current tree node
+     */
+    private int subtreesSize;
 
     /**
-     * A reference to the last subtree node of the current tree node
-     * <p>
-     * Used to avoid the discovery of the last subtree node. As a result
-     * significantly optimized such operations like addition etc.
-     */
-    private LinkedMultiTreeNode<T> lastSubtreeNode;
-
-    /**
-     * Creates an instance of this class
+     * Constructs the {@link ArrayMultiTreeNode} instance
      *
      * @param data data to store in the current tree node
      */
-    public LinkedMultiTreeNode(T data) {
+    public ArrayMultiTreeNode(T data) {
         super(data);
+        this.branchingFactor = DEFAULT_BRANCHING_FACTOR;
+        this.subtrees = new Object[branchingFactor];
+    }
+
+    /**
+     * Constructs the {@link ArrayMultiTreeNode} instance
+     *
+     * @param data data to store in the current tree node
+     * @param branchingFactor initial branching factor, that is the number
+     *                        of subtrees the current tree node can have
+     *                        before getting resized
+     */
+    public ArrayMultiTreeNode(T data, int branchingFactor) {
+        super(data);
+        if (branchingFactor < 0) {
+            throw new IllegalArgumentException("Branching factor can not be negative");
+        }
+        this.branchingFactor = branchingFactor;
+        this.subtrees = new Object[branchingFactor];
     }
 
     /**
@@ -74,21 +103,17 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      * Returns {@link Collections#emptySet()} if the current node is leaf
      *
      * @return collection of the child nodes of the current node with
-     * all of its proper descendants, if any;
-     * {@link Collections#emptySet()} if the current node is leaf
+     *         all of its proper descendants, if any;
+     *         {@link Collections#emptySet()} if the current node is leaf
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Collection<? extends TreeNode<T>> subtrees() {
         if (isLeaf()) {
             return Collections.emptySet();
         }
-        Collection<TreeNode<T>> subtrees = Collections.synchronizedSet(new LinkedHashSet<>());
-        subtrees.add(leftMostNode);
-        LinkedMultiTreeNode<T> nextSubtree = leftMostNode.rightSiblingNode;
-        while (nextSubtree != null) {
-            subtrees.add(nextSubtree);
-            nextSubtree = nextSubtree.rightSiblingNode;
-        }
+        Collection<TreeNode<T>> subtrees =
+            IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) this.subtrees[i]).collect(Collectors.toCollection(() -> Collections.synchronizedSet(new LinkedHashSet<>(subtreesSize))));
         return subtrees;
     }
 
@@ -102,7 +127,7 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      *
      * @param subtree subtree to add to the current tree node
      * @return {@code true} if this tree node was changed as a
-     * result of the call; {@code false} otherwise
+     *         result of the call; {@code false} otherwise
      */
     @Override
     public boolean add(TreeNode<T> subtree) {
@@ -110,14 +135,44 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
             return false;
         }
         TreeNode.linkParent(subtree, this);
-        if (isLeaf()) {
-            leftMostNode = (LinkedMultiTreeNode<T>) subtree;
-            lastSubtreeNode = leftMostNode;
-        } else {
-            lastSubtreeNode.rightSiblingNode = (LinkedMultiTreeNode<T>) subtree;
-            lastSubtreeNode = lastSubtreeNode.rightSiblingNode;
-        }
+        ensureSubtreesCapacity(subtreesSize + 1);
+        subtrees[subtreesSize++] = subtree;
         return true;
+    }
+
+    /**
+     * Increases the capacity of the subtrees array, if necessary, to
+     * ensure that it can hold at least the number of subtrees specified
+     * by the minimum subtrees capacity argument
+     *
+     * @param minSubtreesCapacity the desired minimum subtrees capacity
+     */
+    private void ensureSubtreesCapacity(int minSubtreesCapacity) {
+        if (minSubtreesCapacity > subtrees.length) {
+            increaseSubtreesCapacity(minSubtreesCapacity);
+        }
+    }
+
+    /**
+     * Increases the subtrees array capacity to ensure that it can hold
+     * at least the number of elements specified by the minimum subtrees
+     * capacity argument
+     *
+     * @param minSubtreesCapacity the desired minimum subtrees capacity
+     */
+    private void increaseSubtreesCapacity(int minSubtreesCapacity) {
+        int oldSubtreesCapacity = subtrees.length;
+        int newSubtreesCapacity = oldSubtreesCapacity + (oldSubtreesCapacity >> 1);
+        if (newSubtreesCapacity < minSubtreesCapacity) {
+            newSubtreesCapacity = minSubtreesCapacity;
+        }
+        if (newSubtreesCapacity > MAX_ARRAY_SIZE) {
+            if (minSubtreesCapacity < 0) {
+                throw new OutOfMemoryError();
+            }
+            newSubtreesCapacity = minSubtreesCapacity > MAX_ARRAY_SIZE ? Integer.MAX_VALUE : MAX_ARRAY_SIZE;
+        }
+        subtrees = Arrays.copyOf(subtrees, newSubtreesCapacity);
     }
 
     /**
@@ -129,50 +184,60 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      *
      * @param subtree subtree to drop from the current tree node
      * @return {@code true} if the current tree node was changed as a result
-     * of the call; {@code false} otherwise
+     *         of the call; {@code false} otherwise
      */
     @Override
     public boolean dropSubtree(TreeNode<T> subtree) {
         if (subtree == null || isLeaf() || subtree.isRoot()) {
             return false;
         }
-        if (leftMostNode.equals(subtree)) {
-            leftMostNode = leftMostNode.rightSiblingNode;
-            TreeNode.unlinkParent(subtree);
-            ((LinkedMultiTreeNode<T>) subtree).rightSiblingNode = null;
-            return true;
-        } else {
-            LinkedMultiTreeNode<T> nextSubtree = leftMostNode;
-            while (nextSubtree.rightSiblingNode != null) {
-                if (nextSubtree.rightSiblingNode.equals(subtree)) {
-                    TreeNode.unlinkParent(subtree);
-                    nextSubtree.rightSiblingNode = nextSubtree.rightSiblingNode.rightSiblingNode;
-                    ((LinkedMultiTreeNode<T>) subtree).rightSiblingNode = null;
-                    return true;
-                } else {
-                    nextSubtree = nextSubtree.rightSiblingNode;
-                }
-            }
+        int mSubtreeIndex = indexOf(subtree);
+        if (mSubtreeIndex < 0) {
+            return false;
         }
-        return false;
+        int mNumShift = subtreesSize - mSubtreeIndex - 1;
+        if (mNumShift > 0) {
+            System.arraycopy(subtrees, mSubtreeIndex + 1, subtrees, mSubtreeIndex, mNumShift);
+        }
+        subtrees[--subtreesSize] = null;
+        TreeNode.unlinkParent(subtree);
+        return true;
+    }
+
+    /**
+     * Returns the index of the first occurrence of the specified subtree
+     * within subtrees array; {@code -1} if the subtrees array does not contain
+     * such subtree
+     *
+     * @param subtree subtree to find the index of
+     * @return index of the first occurrence of the specified subtree within
+     *         subtrees array; {@code -1} if the subtrees array does not contain
+     *         such subtree
+     */
+    @SuppressWarnings("unchecked")
+    private int indexOf(TreeNode<T> subtree) {
+        int i = 0;
+        while (i < subtreesSize) {
+            TreeNode<T> mSubtree = (TreeNode<T>) subtrees[i];
+            if (mSubtree.equals(subtree)) {
+                return i;
+            }
+            i++;
+        }
+        return -1;
     }
 
     /**
      * Removes all the subtrees with all of its descendants from the current
      * tree node
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void clear() {
         if (!isLeaf()) {
-            LinkedMultiTreeNode<T> nextNode = leftMostNode;
-            while (nextNode != null) {
-                TreeNode.unlinkParent(nextNode);
-                LinkedMultiTreeNode<T> nextNodeRightSiblingNode = nextNode.rightSiblingNode;
-                nextNode.rightSiblingNode = null;
-                nextNode.lastSubtreeNode = null;
-                nextNode = nextNodeRightSiblingNode;
-            }
-            leftMostNode = null;
+            IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) subtrees[i]).forEachOrdered(TreeNode::unlinkParent);
+            subtrees = new Object[branchingFactor];
+            subtreesSize = 0;
         }
     }
 
@@ -197,9 +262,10 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
              * @throws TreeNodeException an exception that is thrown in case
              *                           if the current tree node is a leaf
              */
+            @SuppressWarnings("unchecked")
             @Override
             protected TreeNode<T> leftMostNode() {
-                return leftMostNode;
+                return (TreeNode<T>) subtrees[0];
             }
 
             /**
@@ -212,23 +278,27 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
              *                           the current tree node is root
              */
             @Override
+            @SuppressWarnings("unchecked")
             protected TreeNode<T> rightSiblingNode() {
-                return rightSiblingNode;
+                ArrayMultiTreeNode<T> mParent = (ArrayMultiTreeNode<T>) ArrayMultiTreeNode.super.parent();
+                int rightSiblingNodeIndex = mParent.indexOf(ArrayMultiTreeNode.this) + 1;
+                return rightSiblingNodeIndex < mParent.subtreesSize ? (TreeNode<T>) mParent.subtrees[rightSiblingNodeIndex] : null;
             }
-
         };
     }
 
     /**
      * Checks whether the current tree node is a leaf, e.g. does not have any
      * subtrees
+     * <p>
+     * Overridden to have a faster array implementation
      *
      * @return {@code true} if the current tree node is a leaf, e.g. does not
-     * have any subtrees; {@code false} otherwise
+     *         have any subtrees; {@code false} otherwise
      */
     @Override
     public boolean isLeaf() {
-        return leftMostNode == null;
+        return subtreesSize == 0;
     }
 
     /**
@@ -240,22 +310,15 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      * @param subtree subtree whose presence within the current tree
      *                node children is to be checked
      * @return {@code true} if among the current tree node subtrees
-     * there is a specified subtree; {@code false} otherwise
+     *         there is a specified subtree; {@code false} otherwise
      */
+    @SuppressWarnings("unchecked")
     @Override
     public boolean hasSubtree(TreeNode<T> subtree) {
         if (subtree == null || isLeaf() || subtree.isRoot()) {
             return false;
         }
-        LinkedMultiTreeNode<T> nextSubtree = leftMostNode;
-        while (nextSubtree != null) {
-            if (nextSubtree.equals(subtree)) {
-                return true;
-            } else {
-                nextSubtree = nextSubtree.rightSiblingNode;
-            }
-        }
-        return false;
+        return IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) subtrees[i]).anyMatch(subtree::equals);
     }
 
     /**
@@ -267,23 +330,25 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      * @param node node whose presence within the current tree node with
      *             all of its descendants (entire tree) is to be checked
      * @return {@code true} if the current node with all of its descendants
-     * (entire tree) contains the specified node; {@code false}
-     * otherwise
+     *         (entire tree) contains the specified node; {@code false}
+     *         otherwise
      */
+    @SuppressWarnings("unchecked")
     @Override
     public boolean contains(TreeNode<T> node) {
         if (node == null || isLeaf() || node.isRoot()) {
             return false;
         }
-        LinkedMultiTreeNode<T> nextSubtree = leftMostNode;
-        while (nextSubtree != null) {
-            if (nextSubtree.equals(node)) {
+        int i = 0;
+        while (i < subtreesSize) {
+            TreeNode<T> subtree = (TreeNode<T>) subtrees[i];
+            if (subtree.equals(node)) {
                 return true;
             }
-            if (nextSubtree.contains(node)) {
+            if (subtree.contains(node)) {
                 return true;
             }
-            nextSubtree = nextSubtree.rightSiblingNode;
+            i++;
         }
         return false;
     }
@@ -298,8 +363,9 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      *
      * @param node node to remove from the entire tree
      * @return {@code true} if the current tree node was changed as a result of
-     * the call; {@code false} otherwise
+     *         the call; {@code false} otherwise
      */
+    @SuppressWarnings("unchecked")
     @Override
     public boolean remove(TreeNode<T> node) {
         if (node == null || isLeaf() || node.isRoot()) {
@@ -308,14 +374,7 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
         if (dropSubtree(node)) {
             return true;
         }
-        LinkedMultiTreeNode<T> nextSubtree = leftMostNode;
-        while (nextSubtree != null) {
-            if (nextSubtree.remove(node)) {
-                return true;
-            }
-            nextSubtree = nextSubtree.rightSiblingNode;
-        }
-        return false;
+        return IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) subtrees[i]).anyMatch(subtree -> subtree.remove(node));
     }
 
     /**
@@ -328,16 +387,13 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      * @param action action, which is to be performed on each tree
      *               node, while traversing the tree
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void traversePreOrder(TraversalAction<TreeNode<T>> action) {
         if (action.isIncomplete()) {
             action.perform(this);
             if (!isLeaf()) {
-                LinkedMultiTreeNode<T> nextNode = leftMostNode;
-                while (nextNode != null) {
-                    nextNode.traversePreOrder(action);
-                    nextNode = nextNode.rightSiblingNode;
-                }
+                IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) subtrees[i]).forEachOrdered(subtree -> subtree.traversePreOrder(action));
             }
         }
     }
@@ -352,15 +408,12 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      * @param action action, which is to be performed on each tree
      *               node, while traversing the tree
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void traversePostOrder(TraversalAction<TreeNode<T>> action) {
         if (action.isIncomplete()) {
             if (!isLeaf()) {
-                LinkedMultiTreeNode<T> nextNode = leftMostNode;
-                while (nextNode != null) {
-                    nextNode.traversePostOrder(action);
-                    nextNode = nextNode.rightSiblingNode;
-                }
+                IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) subtrees[i]).forEachOrdered(subtree -> subtree.traversePostOrder(action));
             }
             action.perform(this);
         }
@@ -375,18 +428,45 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      * @return height of the current tree node, e.g. the number of edges
      * on the longest downward path between that node and a leaf
      */
+    @SuppressWarnings("unchecked")
     @Override
     public int height() {
         if (isLeaf()) {
             return 0;
         }
         int height = 0;
-        LinkedMultiTreeNode<T> nextNode = leftMostNode;
-        while (nextNode != null) {
-            height = Math.max(height, nextNode.height());
-            nextNode = nextNode.rightSiblingNode;
+        int i = 0;
+        while (i < subtreesSize) {
+            TreeNode<T> subtree = (TreeNode<T>) subtrees[i];
+            height = Math.max(height, subtree.height());
+            i++;
         }
         return height + 1;
+    }
+
+    /**
+     * Adds the collection of the subtrees with all of theirs descendants
+     * to the current tree node
+     * <p>
+     * Checks whether this tree node was changed as a result of the call
+     *
+     * @param subtrees collection of the subtrees with all of their
+     *                 descendants
+     * @return {@code true} if this tree node was changed as a
+     *         result of the call; {@code false} otherwise
+     */
+    @Override
+    public boolean addSubtrees(Collection<? extends MultiTreeNode<T>> subtrees) {
+        if (TreeNode.areAllNulls(subtrees)) {
+            return false;
+        }
+        subtrees.forEach(subtree -> TreeNode.linkParent(subtree, this));
+        Object[] subtreesArray = subtrees.toArray();
+        int subtreesArrayLength = subtreesArray.length;
+        ensureSubtreesCapacity(subtreesSize + subtreesArrayLength);
+        System.arraycopy(subtreesArray, 0, this.subtrees, subtreesSize, subtreesArrayLength);
+        subtreesSize += subtreesArrayLength;
+        return subtreesArrayLength != 0;
     }
 
     /**
@@ -397,28 +477,27 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      * Overridden to have a faster array implementation
      *
      * @return collection of nodes, which have the same parent as
-     * the current node; {@link Collections#emptyList()} if the
-     * current tree node is root or if the current tree node has
-     * no subtrees
+     *         the current node; {@link Collections#emptyList()} if the
+     *         current tree node is root or if the current tree node has
+     *         no subtrees
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Collection<? extends MultiTreeNode<T>> siblings() {
         if (isRoot()) {
             String message = String.format("Unable to find the siblings. The tree node %1$s is root", root());
             throw new TreeNodeException(message);
         }
-        LinkedMultiTreeNode<T> firstNode = ((LinkedMultiTreeNode<T>) parent()).leftMostNode;
-        if (firstNode.rightSiblingNode == null) {
+        ArrayMultiTreeNode<T> mParent = (ArrayMultiTreeNode<T>) super.parent();
+        int parentSubtreesSize = mParent.subtreesSize;
+        if (parentSubtreesSize == 1) {
             return Collections.emptySet();
         }
-        Collection<MultiTreeNode<T>> siblings = Collections.synchronizedSet(new LinkedHashSet<>());
-        LinkedMultiTreeNode<T> nextNode = firstNode;
-        while (nextNode != null) {
-            if (!nextNode.equals(this)) {
-                siblings.add(nextNode);
-            }
-            nextNode = nextNode.rightSiblingNode;
-        }
+        Object[] parentSubtreeObjects = mParent.subtrees;
+
+        Collection<MultiTreeNode<T>> siblings = IntStream.range(0, parentSubtreesSize).mapToObj(i -> (MultiTreeNode<T>) parentSubtreeObjects[i]).filter(parentSubtree -> !parentSubtree.equals(this))
+            .collect(toSafeSet(parentSubtreesSize - 1));
+
         return siblings;
     }
 
