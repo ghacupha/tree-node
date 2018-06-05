@@ -1,6 +1,6 @@
 # Tree Data Structure Java Library
 
-[![Build Status](https://travis-ci.org/ghacupha/tree-node.svg)](https://travis-ci.org/ghacupha/tree-node)
+[![Build Status](https://travis-ci.org/ghacupha/tree-node.svg?branch=master)](https://travis-ci.org/ghacupha/tree-node)
 [![](https://jitpack.io/v/ghacupha/tree-node.svg)](https://jitpack.io/#ghacupha/tree-node)
 
 ## Description
@@ -17,16 +17,16 @@ The library can be installed through maven
 
 ```xml
 <repositories>
-	<repository>
-		<id>jitpack.io</id>
-		<url>https://jitpack.io</url>
-	</repository>
+ <repository>
+  <id>jitpack.io</id>
+  <url>https://jitpack.io</url>
+ </repository>
 </repositories>
 
 <dependency>
-	<groupId>com.github.ghacupha</groupId>
-	<artifactId>tree-node</artifactId>
-	<version>0.0.1</version>
+ <groupId>com.github.ghacupha</groupId>
+ <artifactId>tree-node</artifactId>
+ <version>0.0.1</version>
 </dependency>
 
 ```
