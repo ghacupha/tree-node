@@ -22,6 +22,7 @@ import io.github.ghacupha.tree_node.util.NodeNotFoundException;
 import io.github.ghacupha.tree_node.util.NullNodeException;
 import io.github.ghacupha.tree_node.util.TreeNodeException;
 import io.github.ghacupha.tree_node.util.UnCloneableNodeException;
+import org.jetbrains.annotations.Contract;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;
@@ -657,12 +658,12 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
             return false;
         }
         TreeNode<T> mNode = node;
-        do {
+        while (!mNode.isRoot()) {
             mNode = mNode.parent();
             if (this.equals(mNode)) {
                 return true;
             }
-        } while (!mNode.isRoot());
+        }
         return false;
     }
 
@@ -679,12 +680,12 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
             return false;
         }
         TreeNode<T> mNode = this;
-        do {
+        while (!mNode.isRoot()) {
             mNode = mNode.parent();
             if (node.equals(mNode)) {
                 return true;
             }
-        } while (!mNode.isRoot());
+        }
         return false;
     }
 
@@ -704,6 +705,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
                 count[0]++;
             }
 
+            @Contract(pure = true)
             @Override
             public boolean isIncomplete() {
                 return true;
