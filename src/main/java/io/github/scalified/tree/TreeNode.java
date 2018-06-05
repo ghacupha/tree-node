@@ -16,6 +16,7 @@
 package io.github.scalified.tree;
 
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -129,7 +130,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      * @param <T>        type of the tree node
      * @return traversal action, which populates the input collection with the tree nodes
      */
-    protected static <T> TraversalAction<TreeNode<T>> populateAction(final Collection<TreeNode<T>> collection) {
+    private static <T> TraversalAction<TreeNode<T>> populateAction(final Collection<TreeNode<T>> collection) {
         return new TraversalAction<TreeNode<T>>() {
             @Override
             public void perform(TreeNode<T> node) {
@@ -182,7 +183,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      * @return {@code true} if there is at least one not {@code null} element within
      * the input collection; {@code false} otherwise
      */
-    protected static <T> boolean isAnyNotNull(Collection<T> collection) {
+    private static <T> boolean isAnyNotNull(Collection<T> collection) {
         if (collection == null || collection.isEmpty()) {
             return false;
         }
@@ -260,7 +261,8 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      *
      * @return an iterator over the elements in this tree in proper sequence
      */
-    @Nullable
+    @Override
+    @Nonnull
     public abstract TreeNodeIterator iterator();
 
     /**
@@ -939,7 +941,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
                             nextNodeAvailable = false;
                             break;
                         }
-                        TreeNode<T> nextSibling = currentNode.iterator().checkAndGetRightSiblingNode();
+                        TreeNode<T> nextSibling = Objects.requireNonNull(currentNode.iterator()).checkAndGetRightSiblingNode();
                         if (nextSibling != null) {
                             nextNode = nextSibling;
                             break;
@@ -947,7 +949,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
                     } while (true);
                 }
             } else {
-                nextNode = nextNode.iterator().checkAndGetLeftMostNode();
+                nextNode = Objects.requireNonNull(nextNode.iterator()).checkAndGetLeftMostNode();
             }
             return currentNode;
         }

@@ -19,13 +19,12 @@ import io.github.scalified.tree.TraversalAction;
 import io.github.scalified.tree.TreeNode;
 import io.github.scalified.tree.TreeNodeException;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -251,7 +250,7 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
      * @return an iterator over the elements in this tree in proper sequence
      */
     @Override
-    @Nullable
+    @Nonnull
     public TreeNodeIterator iterator() {
         return new TreeNodeIterator() {
 
