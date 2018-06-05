@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.scalified.tree.multinode;
+package io.github.ghacupha.tree.node.multinode;
 
 
-import io.github.scalified.tree.TraversalAction;
-import io.github.scalified.tree.TreeNode;
-import io.github.scalified.tree.TreeNodeException;
+import io.github.ghacupha.tree.node.TraversalAction;
+import io.github.ghacupha.tree.node.TreeNode;
+import io.github.ghacupha.tree.node.TreeNodeException;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -109,7 +109,7 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
         if (subtree == null) {
             return false;
         }
-        linkParent(subtree, this);
+        TreeNode.linkParent(subtree, this);
         if (isLeaf()) {
             leftMostNode = (LinkedMultiTreeNode<T>) subtree;
             lastSubtreeNode = leftMostNode;
@@ -138,14 +138,14 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
         }
         if (leftMostNode.equals(subtree)) {
             leftMostNode = leftMostNode.rightSiblingNode;
-            unlinkParent(subtree);
+            TreeNode.unlinkParent(subtree);
             ((LinkedMultiTreeNode<T>) subtree).rightSiblingNode = null;
             return true;
         } else {
             LinkedMultiTreeNode<T> nextSubtree = leftMostNode;
             while (nextSubtree.rightSiblingNode != null) {
                 if (nextSubtree.rightSiblingNode.equals(subtree)) {
-                    unlinkParent(subtree);
+                    TreeNode.unlinkParent(subtree);
                     nextSubtree.rightSiblingNode = nextSubtree.rightSiblingNode.rightSiblingNode;
                     ((LinkedMultiTreeNode<T>) subtree).rightSiblingNode = null;
                     return true;
@@ -166,7 +166,7 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
         if (!isLeaf()) {
             LinkedMultiTreeNode<T> nextNode = leftMostNode;
             while (nextNode != null) {
-                unlinkParent(nextNode);
+                TreeNode.unlinkParent(nextNode);
                 LinkedMultiTreeNode<T> nextNodeRightSiblingNode = nextNode.rightSiblingNode;
                 nextNode.rightSiblingNode = null;
                 nextNode.lastSubtreeNode = null;
@@ -185,8 +185,8 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     @Nonnull
-    public TreeNodeIterator iterator() {
-        return new TreeNodeIterator() {
+    public TreeNode.TreeNodeIterator iterator() {
+        return new TreeNode.TreeNodeIterator() {
 
             /**
              * Returns the leftmost node of the current tree node if the

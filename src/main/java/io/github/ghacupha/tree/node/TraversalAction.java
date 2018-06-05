@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.scalified.tree;
+package io.github.ghacupha.tree.node;
 
 /**
  * An interface, which defines the action to perform while traversing

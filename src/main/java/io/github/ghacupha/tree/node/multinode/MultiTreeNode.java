@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.scalified.tree.multinode;
+package io.github.ghacupha.tree.node.multinode;
 
-import io.github.scalified.tree.TreeNode;
-import io.github.scalified.tree.TreeNodeException;
+import io.github.ghacupha.tree.node.TreeNode;
+import io.github.ghacupha.tree.node.TreeNodeException;
 
 import java.util.Collection;
 import java.util.Collections;

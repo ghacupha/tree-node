@@ -15,16 +15,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.scalified.tree.multinode;
+package io.github.ghacupha.tree.node.multinode;
 
-import io.github.scalified.tree.TreeNode;
+import io.github.ghacupha.tree.node.TreeNode;
+import org.junit.Test;
 
 /**
  * @author shell
  * @version 1.0.0
  * @since 1.0.0
  */
-public class LinkedMultiTreeNodeTest extends MultiTreeNodeTest {
+public class ArrayMultiTreeNodeTest extends MultiTreeNodeTest {
 
 	/*
 	 * Test tree structure
@@ -45,7 +46,20 @@ public class LinkedMultiTreeNodeTest extends MultiTreeNodeTest {
 
 	@Override
 	protected <T> TreeNode<T> createTreeNode(T data) {
-		return new LinkedMultiTreeNode<>(data);
+		return new ArrayMultiTreeNode<>(data);
+	}
+
+	/*private static <T> TreeNode<T> createTreeNode(T data, int branchingFactor) {
+		return new ArrayMultiTreeNode<>(data, branchingFactor);
+	}*/
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testIncorrectBranchingFactor() {
+		int incorrectBranchingFactor = -10;
+
+		//createTreeNode(ROOT_DATA, incorrectBranchingFactor);
+
+		new ArrayMultiTreeNode<>(ROOT_DATA, incorrectBranchingFactor);
 	}
 
 }

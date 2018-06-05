@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.scalified.tree.multinode;
+package io.github.ghacupha.tree.node.multinode;
 
-import io.github.scalified.tree.TraversalAction;
-import io.github.scalified.tree.TreeNode;
-import io.github.scalified.tree.TreeNodeException;
+import io.github.ghacupha.tree.node.TraversalAction;
+import io.github.ghacupha.tree.node.TreeNode;
+import io.github.ghacupha.tree.node.TreeNodeException;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -134,7 +134,7 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
         if (subtree == null) {
             return false;
         }
-        linkParent(subtree, this);
+        TreeNode.linkParent(subtree, this);
         ensureSubtreesCapacity(subtreesSize + 1);
         subtrees[subtreesSize++] = subtree;
         return true;
@@ -200,7 +200,7 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
             System.arraycopy(subtrees, mSubtreeIndex + 1, subtrees, mSubtreeIndex, mNumShift);
         }
         subtrees[--subtreesSize] = null;
-        unlinkParent(subtree);
+        TreeNode.unlinkParent(subtree);
         return true;
     }
 
@@ -250,8 +250,8 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     @Nonnull
-    public TreeNodeIterator iterator() {
-        return new TreeNodeIterator() {
+    public TreeNode.TreeNodeIterator iterator() {
+        return new TreeNode.TreeNodeIterator() {
 
             /**
              * Returns the leftmost node of the current tree node if the
@@ -457,10 +457,10 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public boolean addSubtrees(Collection<? extends MultiTreeNode<T>> subtrees) {
-        if (areAllNulls(subtrees)) {
+        if (TreeNode.areAllNulls(subtrees)) {
             return false;
         }
-        subtrees.forEach(subtree -> linkParent(subtree, this));
+        subtrees.forEach(subtree -> TreeNode.linkParent(subtree, this));
         Object[] subtreesArray = subtrees.toArray();
         int subtreesArrayLength = subtreesArray.length;
         ensureSubtreesCapacity(subtreesSize + subtreesArrayLength);
