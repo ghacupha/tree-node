@@ -9,7 +9,8 @@ This Library contains different implementations of the tree data structures, suc
 
 ## Use Case
 
-Once upon a time I wanted to do something like this:
+[Once](https://github.com/ghacupha/book-keeper) upon a time I wanted to create relationships between [models](https://github.com/ghacupha/book-keeper/blob/master/src/main/java/io/github/ghacupha/keeper/book/api/Account.java)
+ that could exist as a runtime-generated hierarchy. It was supposed to look something like this:
 
 ```java
         accounts.add(assetAccount);
@@ -122,9 +123,13 @@ I would then expect the hiearchy to look something like this:
 ```
 
 Obviously that would require some serious algorithmic work maintaining such hierarchies and
-initiating their creation at runtime, only adds to the complexity. That does not mean creating them
-at compile time or at application startup (configuration) might be any cheaper.
-It would be much later that I stumbled on use of a specific type of a graph. Trees.
+initiating their creation at runtime, only adds to the complexity. One would have to maintain pointers to the
+ level of hierarchy, maintain pointers to all upstream relationships and downstream relationships. When you
+ start thinking of actions on such a collection, the fastest collections would be of no assistance. This does not
+ even begin to account for the fact that the [object](https://github.com/ghacupha/book-keeper/blob/master/src/main/java/io/github/ghacupha/keeper/book/base/SimpleAccount.java)
+ I am peddling is quite heavy.
+ <br> That does not mean creating them at compile time or at application startup (configuration) might be any cheaper.
+<br> It would be much later that I stumbled on use of a specific type of a graph. Trees.
 
 ## Requirements
 
@@ -323,7 +328,7 @@ that represent expressions
 
 ## Usage
 
-[**TreeNode**](https://github.com/ghacupha/tree-node/blob/master/tree/src/main/java/io/github/ghacupha/tree_node/TreeNode.java) - 
+[**TreeNode**](https://github.com/ghacupha/tree-node/blob/master/src/main/java/io/github/ghacupha/tree_node/TreeNode.java) -
 is the top interface, which represents the basic tree data structures. It describes the basic methods, which are 
 implemented by all the trees
 
@@ -456,7 +461,7 @@ node.clear();
 
 ### Traversal
 
-[TraversalAction](https://github.com/ghacupha/tree-node/blob/master/tree/src/main/java/io/github/ghacupha/tree_node/TraversalAction.java)
+[TraversalAction](https://github.com/ghacupha/tree-node/blob/master/src/main/java/io/github/ghacupha/tree_node/TraversalAction.java)
 allows to define an action, which has a single method **perform(TreeNode<T>)**. This method is called during traversal
 on each node visited
 
@@ -550,7 +555,7 @@ int height = node.height();
 
 ### K-ary (multinode) Trees
 
-[**MultiTreeNode**](https://github.com/ghacupha/tree-node/blob/master/tree/src/main/java/io/github/ghacupha/tree_node/multinode/MultiTreeNode.java) - 
+[**MultiTreeNode**](https://github.com/ghacupha/tree-node/blob/master/src/main/java/io/github/ghacupha/tree_node/MultiTreeNode.java) -
 interface, which adds additional methods for multi tree node (K-ary) tree data structures:
 
 ```java
@@ -575,9 +580,9 @@ boolean resultRemoveSubtrees = node.removeSubtrees(collectionToRemove);
 
 K-ary (multi node) trees are represented by **MultiTreeNode** interface and have 2 implementations:
 
-* [**ArrayTreeNode**](https://github.com/ghacupha/tree-node/blob/master/tree/src/main/java/io/github/ghacupha/tree_node/multinode/ArrayMultiTreeNode.java) -
+* [**ArrayTreeNode**](https://github.com/ghacupha/tree-node/blob/master/src/main/java/io/github/ghacupha/tree_node/ArrayTreeNode.java) -
 implementation based on the array-of-pointers representation
-* [**LeftChildTreeNode**](https://github.com/ghacupha/tree-node/blob/master/tree/src/main/java/io/github/ghacupha/tree_node/multinode/LinkedMultiTreeNode.java) -
+* [**LeftChildTreeNode**](https://github.com/ghacupha/tree-node/blob/master/src/main/java/io/github/ghacupha/tree_node/LeftChildTreeNode.java) -
 implementation based on the leftmost-child-right-sibling representation
 
 **LeftChildTreeNode** is more space-efficient than a ArrayTreeNode, at a cost of slower index lookups.
@@ -607,4 +612,4 @@ The **ArrayTreeNode** is okay for most other use cases.
 
 ## Acknowledgements
 
-* Inspired by [Scalified](https://github.com/ghacupha/tree-node)
+* Inspired by [Scalified](https://github.com/Scalified/tree)
