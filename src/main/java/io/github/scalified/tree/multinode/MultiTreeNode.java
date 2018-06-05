@@ -140,7 +140,7 @@ public abstract class MultiTreeNode<T> extends TreeNode<T> {
         return result;
     }
 
-    protected Collector<MultiTreeNode<T>, ?, Set<MultiTreeNode<T>>> toSafeSet(int initialCapicity) {
+    Collector<MultiTreeNode<T>, ?, Set<MultiTreeNode<T>>> toSafeSet(int initialCapicity) {
         return Collectors.toCollection(() -> Collections.synchronizedSet(new LinkedHashSet<>(initialCapicity)));
     }
 

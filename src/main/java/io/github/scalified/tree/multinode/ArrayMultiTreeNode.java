@@ -20,7 +20,6 @@ import io.github.scalified.tree.TreeNode;
 import io.github.scalified.tree.TreeNodeException;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;

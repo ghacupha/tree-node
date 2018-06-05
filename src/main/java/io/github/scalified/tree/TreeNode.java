@@ -17,7 +17,6 @@ package io.github.scalified.tree;
 
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Collection;
