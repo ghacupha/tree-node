@@ -17,8 +17,9 @@
  */
 package io.github.ghacupha.tree_node;
 
-import io.github.ghacupha.tree_node.TreeNode.TreeNodeIterator;
 import io.github.ghacupha.tree_node.util.TreeNodeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -35,6 +36,8 @@ import java.util.stream.IntStream;
  * @param <T> Type of data being carried in the node
  */
 public class ArrayTreeNode<T> extends MultiTreeNode<T> {
+
+    private static final Logger log = LoggerFactory.getLogger(ArrayTreeNode.class);
 
     /**
      * Current UID of this object used for serialization
