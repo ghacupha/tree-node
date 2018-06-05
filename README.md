@@ -11,12 +11,32 @@ This Library contains different implementations of the tree data structures, suc
 
 The Library requires Java SE Development Kit 8 or higher
 
-## Maven dependency
+## Installation
 
-```java
-dependencies {
-	compile 'com.scalified:tree:0.2.5'
-}
+The library can be installed through maven
+
+```xml
+<repositories>
+	<repository>
+		<id>jitpack.io</id>
+		<url>https://jitpack.io</url>
+	</repository>
+</repositories>
+
+<dependency>
+	<groupId>com.github.ghacupha</groupId>
+	<artifactId>tree-node</artifactId>
+	<version>0.0.1</version>
+</dependency>
+
+```
+
+Or built from source and pushed into the local repository
+```
+   git clone https://github.com/ghacupha/tree-node.git
+   cd tree-node
+   mvn package
+   mvn install
 ```
 
 ## Theory
