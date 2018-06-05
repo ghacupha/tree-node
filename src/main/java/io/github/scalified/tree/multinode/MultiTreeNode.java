@@ -43,7 +43,7 @@ public abstract class MultiTreeNode<T> extends TreeNode<T> {
      *
      * @param data data to store in the current tree node
      */
-    public MultiTreeNode(T data) {
+    MultiTreeNode(T data) {
         super(data);
     }
 
@@ -98,10 +98,6 @@ public abstract class MultiTreeNode<T> extends TreeNode<T> {
         return siblings;
     }
 
-    protected Collector<MultiTreeNode<T>, ?, Set<MultiTreeNode<T>>> toSafeSet(int initialCapicity) {
-        return Collectors.toCollection(() -> Collections.synchronizedSet(new LinkedHashSet<>(initialCapicity)));
-    }
-
     /**
      * Checks whether among the current tree node subtrees there are
      * all of the subtrees from the specified collection
@@ -142,6 +138,10 @@ public abstract class MultiTreeNode<T> extends TreeNode<T> {
             }
         }
         return result;
+    }
+
+    protected Collector<MultiTreeNode<T>, ?, Set<MultiTreeNode<T>>> toSafeSet(int initialCapicity) {
+        return Collectors.toCollection(() -> Collections.synchronizedSet(new LinkedHashSet<>(initialCapicity)));
     }
 
 }

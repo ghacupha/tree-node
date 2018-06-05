@@ -15,6 +15,7 @@
  */
 package io.github.scalified.tree;
 
+
 import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -104,7 +105,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
     /**
      * Data store in the current tree node
      */
-    protected T data;
+    private T data;
 
     /**
      * Creates an instance of this class
