@@ -208,7 +208,7 @@ pointers to the children of that node
 <br>The *ith* component of the array at a node contains a pointer to the *ith* child of that node. 
 A missing child can be represented by a **null** pointer
 
-![Array-of-Pointers Representation](https://github.com/Scalified/tree/blob/master/assets/array_of_pointers_representation.png)
+![Array-of-Pointers Representation](https://github.com/ghacupha/tree-node/blob/master/assets/array_of_pointers_representation.png)
 
 **Array-of-Pointers** representation makes it possible to quickly access the *ith* child of any node
 <br>This representation, however, is very wasteful of space when only a few nodes in the tree have many children. 
@@ -226,7 +226,7 @@ not have pointers to any of its other children. In order to locate the second an
 the children link list created, in which each child *c* points to the child of *n* immediately to the right of *c*.
 That node is called the right sibling of *c*
 
-![Leftmost-Child-Right-Sibling Representation](https://github.com/Scalified/tree/blob/master/assets/leftmost_child_right_sibling_representation.png)
+![Leftmost-Child-Right-Sibling Representation](https://github.com/ghacupha/tree-node/blob/master/assets/leftmost_child_right_sibling_representation.png)
 
 In the figure above *n3* is the right sibling of *n2*, *n4* is the right sibling of *n3*, and *n4* has no right sibling. 
 The children of *n1* can be found by following its leftmost-child pointer to *n2*, then the right-sibling pointer to 
@@ -234,13 +234,13 @@ The children of *n1* can be found by following its leftmost-child pointer to *n2
 indeed), therefore *n1* has no more children
 <br>The figure above can be represented in such a way:
 
-![Leftmost-Child-Right-Sibling Another Representation](https://github.com/Scalified/tree/blob/master/assets/leftmost_child_right_sibling_another_representation.png)
+![Leftmost-Child-Right-Sibling Another Representation](https://github.com/ghacupha/tree-node/blob/master/assets/leftmost_child_right_sibling_another_representation.png)
 
 The downward arrows are the leftmost-child links; the sideways arrows are the right-sibling links
 
 ### Recursions on Trees
 
-![Recursion on Trees](https://github.com/Scalified/tree/blob/master/assets/recursion_on_trees.png)
+![Recursion on Trees](https://github.com/ghacupha/tree-node/blob/master/assets/recursion_on_trees.png)
 
 #### Traversal
 
@@ -280,7 +280,7 @@ expression
 
 **Structural Induction** is a proof method that is used to prove some statement *S(T)* is true for all trees *T*
 
-![Structural Induction](https://github.com/Scalified/tree/blob/master/assets/structural_induction.png)
+![Structural Induction](https://github.com/ghacupha/tree-node/blob/master/assets/structural_induction.png)
 
 For the basis *S(T)* must be shown to be true when *T* consists of a single node. For the induction, *T* is supposed 
 to be a tree with root *r* and children *c1*, *c2*, …, *ck*, for some *k ≥ 1*. If *T1*, *T2*, …, *Tk* are the subtrees 
@@ -307,7 +307,7 @@ expression represented by *T*
 <br>For the basis, *T* consists of a single node. That is, the argument *n* is a (pointer to a) leaf. Since the 
 operator field has the value *‘i’* when the node represents and operand, the function succeeds
 
-![Structural Induction Nodes](https://github.com/Scalified/tree/blob/master/assets/structural_induction_nodes.png)
+![Structural Induction Nodes](https://github.com/ghacupha/tree-node/blob/master/assets/structural_induction_nodes.png)
 
 If the node *n* is not a (pointer to a) leaf, the inductive hypothesis is that *S(T’)* is true for each tree *T’* 
 rooted at one of the children of *n*. *S(T)* then must be proved for the tree *T* rooted at *n*
@@ -323,7 +323,7 @@ that represent expressions
 
 ## Usage
 
-[**TreeNode**](https://github.com/Scalified/tree/blob/master/tree/src/main/java/com/scalified/tree/TreeNode.java) - 
+[**TreeNode**](https://github.com/ghacupha/tree-node/blob/master/tree/src/main/java/io/github/ghacupha/tree_node/TreeNode.java) - 
 is the top interface, which represents the basic tree data structures. It describes the basic methods, which are 
 implemented by all the trees
 
@@ -331,7 +331,7 @@ implemented by all the trees
 
 Suppose you need to create the following tree with **String** data using array-of-pointer representation:
 
-![K-ary tree](https://github.com/Scalified/tree/blob/master/assets/k_ary_tree.png)
+![K-ary tree](https://github.com/ghacupha/tree-node/blob/master/assets/k_ary_tree.png)
 
 The following code snippet shows how to build such tree: 
 
@@ -456,7 +456,7 @@ node.clear();
 
 ### Traversal
 
-[TraversalAction](https://github.com/Scalified/tree/blob/master/tree/src/main/java/com/scalified/tree/TraversalAction.java)
+[TraversalAction](https://github.com/ghacupha/tree-node/blob/master/tree/src/main/java/io/github/ghacupha/tree_node/TraversalAction.java)
 allows to define an action, which has a single method **perform(TreeNode<T>)**. This method is called during traversal
 on each node visited
 
@@ -550,7 +550,7 @@ int height = node.height();
 
 ### K-ary (multinode) Trees
 
-[**MultiTreeNode**](https://github.com/Scalified/tree/blob/master/tree/src/main/java/com/scalified/tree/multinode/MultiTreeNode.java) - 
+[**MultiTreeNode**](https://github.com/ghacupha/tree-node/blob/master/tree/src/main/java/io/github/ghacupha/tree_node/multinode/MultiTreeNode.java) - 
 interface, which adds additional methods for multi tree node (K-ary) tree data structures:
 
 ```java
@@ -575,9 +575,9 @@ boolean resultRemoveSubtrees = node.removeSubtrees(collectionToRemove);
 
 K-ary (multi node) trees are represented by **MultiTreeNode** interface and have 2 implementations:
 
-* [**ArrayTreeNode**](https://github.com/Scalified/tree/blob/master/tree/src/main/java/com/scalified/tree/multinode/ArrayMultiTreeNode.java) -
+* [**ArrayTreeNode**](https://github.com/ghacupha/tree-node/blob/master/tree/src/main/java/io/github/ghacupha/tree_node/multinode/ArrayMultiTreeNode.java) -
 implementation based on the array-of-pointers representation
-* [**LeftChildTreeNode**](https://github.com/Scalified/tree/blob/master/tree/src/main/java/com/scalified/tree/multinode/LinkedMultiTreeNode.java) -
+* [**LeftChildTreeNode**](https://github.com/ghacupha/tree-node/blob/master/tree/src/main/java/io/github/ghacupha/tree_node/multinode/LinkedMultiTreeNode.java) -
 implementation based on the leftmost-child-right-sibling representation
 
 **LeftChildTreeNode** is more space-efficient than a ArrayTreeNode, at a cost of slower index lookups.
@@ -607,4 +607,4 @@ The **ArrayTreeNode** is okay for most other use cases.
 
 ## Acknowledgements
 
-* Inspired by [Scalified](https://github.com/scalified/tree)
+* Inspired by [Scalified](https://github.com/ghacupha/tree-node)
