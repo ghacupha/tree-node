@@ -118,8 +118,8 @@ I would then expect the hiearchy to look something like this:
 |  |  +- Sundry Creditors
 
 ```
-Obviosly that would require some serious algorithmic work maintaining such hiearachies and
-managing their creation at runtime, only adds to the complexity. That does not mean creating them
+Obviously that would require some serious algorithmic work maintaining such hierarchies and
+initiating their creation at runtime, only adds to the complexity. That does not mean creating them
 at compile time or at application startup (configuration) might be any cheaper.
 It would be much later that I stumbled on use of a specific type of a graph. Trees.
 
