@@ -612,4 +612,5 @@ The **ArrayTreeNode** is okay for most other use cases.
 
 ## Acknowledgements
 
-* Inspired by [Scalified](https://github.com/Scalified/tree)
+* Heavily Inspired by [Scalified](https://github.com/Scalified/tree). In fact the better part of this README file comes
+from that project
