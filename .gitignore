@@ -1,6 +1,7 @@
 .idea
 .gradle
 .okhttpcache
+*.iml
 build
 tree/out/
 target/
