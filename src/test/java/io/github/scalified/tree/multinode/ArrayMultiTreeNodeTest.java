@@ -47,14 +47,17 @@ public class ArrayMultiTreeNodeTest extends MultiTreeNodeTest {
 		return new ArrayMultiTreeNode<>(data);
 	}
 
-	private static <T> TreeNode<T> createTreeNode(T data, int branchingFactor) {
+	/*private static <T> TreeNode<T> createTreeNode(T data, int branchingFactor) {
 		return new ArrayMultiTreeNode<>(data, branchingFactor);
-	}
+	}*/
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testIncorrectBranchingFactor() {
 		int incorrectBranchingFactor = -10;
-		createTreeNode(ROOT_DATA, incorrectBranchingFactor);
+
+		//createTreeNode(ROOT_DATA, incorrectBranchingFactor);
+
+		new ArrayMultiTreeNode<>(ROOT_DATA, incorrectBranchingFactor);
 	}
 
 }
