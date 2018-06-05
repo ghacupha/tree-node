@@ -23,6 +23,8 @@ import io.github.ghacupha.tree_node.util.NullNodeException;
 import io.github.ghacupha.tree_node.util.TreeNodeException;
 import io.github.ghacupha.tree_node.util.UnCloneableNodeException;
 import org.jetbrains.annotations.Contract;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;
@@ -95,6 +97,8 @@ import static io.github.ghacupha.tree_node.util.TreeNodeUtils.ensureSingleParent
  */
 public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable, Cloneable {
 
+    private static final Logger log = LoggerFactory.getLogger(TreeNode.class);
+
     /**
      * Identifier generator, used to get a unique id for each created tree node
      */
@@ -160,6 +164,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      * @param <T>    type of the data stored in the tree nodes
      */
     protected static <T> void linkParent(TreeNode<T> node, TreeNode<T> parent) {
+        log.debug("Linking node : {} to the parent : {}", node, parent);
         if (node != null) {
             ensureSingleParent(node, parent);
             node.parent = parent;

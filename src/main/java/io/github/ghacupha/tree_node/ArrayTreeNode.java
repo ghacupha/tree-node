@@ -218,6 +218,7 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
      */
     @SuppressWarnings("unchecked")
     private int indexOf(TreeNode<T> subtree) {
+        log.debug("Finding the indexOf subtree {} in node : {}", subtree, this);
         int i = 0;
         while (i < subtreesSize) {
             TreeNode<T> mSubtree = (TreeNode<T>) subtrees[i];
@@ -282,8 +283,10 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
             @Override
             @SuppressWarnings("unchecked")
             protected TreeNode<T> rightSiblingNode() {
+                log.debug("Getting the right sibling to node : {}", this);
                 ArrayTreeNode<T> mParent = (ArrayTreeNode<T>) ArrayTreeNode.super.parent();
                 int rightSiblingNodeIndex = mParent.indexOf(ArrayTreeNode.this) + 1;
+                log.debug("The right sibling is : {}", rightSiblingNodeIndex);
                 return rightSiblingNodeIndex < mParent.subtreesSize ? (TreeNode<T>) mParent.subtrees[rightSiblingNodeIndex] : null;
             }
         };
@@ -317,7 +320,9 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean hasSubtree(TreeNode<T> subtree) {
+        log.debug("Checking if : {} has subtree : {}", this, subtree);
         if (subtree == null || isLeaf() || subtree.isRoot()) {
+            log.debug("Subtree {} not found", subtree);
             return false;
         }
         return IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) subtrees[i]).anyMatch(subtree::equals);
@@ -338,20 +343,25 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean contains(TreeNode<T> node) {
+        log.debug("Checking if node: {} contains node : {}", this, node);
         if (node == null || isLeaf() || node.isRoot()) {
+            log.debug("Node: {} not found in node : {}", node, this);
             return false;
         }
         int i = 0;
         while (i < subtreesSize) {
             TreeNode<T> subtree = (TreeNode<T>) subtrees[i];
             if (subtree.equals(node)) {
+                log.debug("Node: {} has been found at index : {}", node, this.indexOf(node));
                 return true;
             }
             if (subtree.contains(node)) {
+                log.debug("Node: {} has been found at index : {}", node, this.indexOf(node));
                 return true;
             }
             i++;
         }
+        log.debug("Node: {} not found in node : {}", node, this);
         return false;
     }
 
@@ -370,7 +380,9 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean remove(TreeNode<T> node) {
+        log.debug("Removing the node: {} from the subtree: {}", node, this);
         if (node == null || isLeaf() || node.isRoot()) {
+            log.debug("The node : {} has not been removed", node);
             return false;
         }
         if (dropSubtree(node)) {
@@ -392,12 +404,14 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
     @SuppressWarnings("unchecked")
     @Override
     public void traversePreOrder(TraversalAction<TreeNode<T>> action) {
+        log.debug("Performing postOrder traversal on : {} with {} subtrees", this, subtreesSize);
         if (action.isIncomplete()) {
             action.perform(this);
             if (!isLeaf()) {
                 IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) subtrees[i]).forEachOrdered(subtree -> subtree.traversePreOrder(action));
             }
         }
+        log.debug("postOrder traversal completed...");
     }
 
     /**
@@ -413,12 +427,14 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
     @SuppressWarnings("unchecked")
     @Override
     public void traversePostOrder(TraversalAction<TreeNode<T>> action) {
+        log.debug("Performing postOrder traversal on : {} with {} subtrees", this, subtreesSize);
         if (action.isIncomplete()) {
             if (!isLeaf()) {
                 IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) subtrees[i]).forEachOrdered(subtree -> subtree.traversePostOrder(action));
             }
             action.perform(this);
         }
+        log.debug("postOrder traversal completed...");
     }
 
     /**
@@ -459,10 +475,11 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public boolean addSubtrees(Collection<? extends MultiTreeNode<T>> subtrees) {
+        log.debug("Adding {} subtrees to ArrayTreeNode id {}", subtrees.size(), this);
         if (TreeNode.areAllNulls(subtrees)) {
             return false;
         }
-        subtrees.forEach(subtree -> TreeNode.linkParent(subtree, this));
+        subtrees.forEach(subtree -> linkParent(subtree, this));
         Object[] subtreesArray = subtrees.toArray();
         int subtreesArrayLength = subtreesArray.length;
         ensureSubtreesCapacity(subtreesSize + subtreesArrayLength);
@@ -499,6 +516,8 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
 
         Collection<MultiTreeNode<T>> siblings = IntStream.range(0, parentSubtreesSize).mapToObj(i -> (MultiTreeNode<T>) parentSubtreeObjects[i]).filter(parentSubtree -> !parentSubtree.equals(this))
             .collect(toSafeSet(parentSubtreesSize - 1));
+
+        log.debug("Returning {} siblings", siblings.size());
 
         return siblings;
     }
