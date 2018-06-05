@@ -32,9 +32,7 @@ import java.util.stream.Collectors;
  * <p>
  * <b>K-ary tree</b> - tree, in which each node has no more than k subtrees
  *
- * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @param <T> Type of data being carried in the node
  */
 public abstract class MultiTreeNode<T> extends TreeNode<T> {
 

@@ -31,9 +31,7 @@ import java.util.stream.IntStream;
  * Implementation of the K-ary (multi node) tree data structure,
  * based on the resizable array representation
  *
- * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @param <T> Type of data being carried in the node
  */
 public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
 

@@ -81,9 +81,7 @@ import java.util.stream.IntStream;
  * action is called</li>
  * </ul>
  *
- * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @param <T> Type of data being carried in the node
  */
 public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable, Cloneable {
 

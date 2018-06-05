@@ -29,9 +29,7 @@ import java.util.LinkedHashSet;
  * Implementation of the K-ary (multi node) tree data structure,
  * based on the leftmost-child-right-sibling representation
  *
- * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @param <T> Type of data being carried in the node
  */
 public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
 
