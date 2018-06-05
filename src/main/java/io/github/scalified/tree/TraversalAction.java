@@ -19,9 +19,7 @@ package io.github.scalified.tree;
  * An interface, which defines the action to perform while traversing
  * the tree
  *
- * @author shell
- * @version 1.0.0
- * @since 1.0.0
+ * @param <T> Type of data being carried in the node
  */
 public interface TraversalAction<T extends TreeNode> {
 

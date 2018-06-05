@@ -19,9 +19,6 @@ package io.github.scalified.tree;
  * The class is responsible for different exceptional cases,
  * that may be caused by user actions while working with {@link TreeNode}
  *
- * @author shell
- * @version 1.0.0
- * @since 1.0.0
  */
 public class TreeNodeException extends RuntimeException {
 
