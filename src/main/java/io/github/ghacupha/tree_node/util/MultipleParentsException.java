@@ -21,12 +21,19 @@ import io.github.ghacupha.tree_node.TreeNode;
 
 /**
  * This exception is encountered when you add a node that already has a parent as a subtree to
- * nother node.
+ * another node.
+ * TODO Do tests for this exception
  */
 public class MultipleParentsException extends RuntimeException {
 
 
-    public <T> MultipleParentsException(TreeNode<T> node, TreeNode<T> parent) {
-        super(String.format("The node: %s could not be added to %s since it already has a parent : %s", node, parent, node.parent()));
+    /**
+     *
+     * @param proposedChild The node being added that already has another parent
+     * @param proposedParent The Parent to which we are proposing to add a child node
+     * @param <T> Type of data being carried around in the tree
+     */
+    public <T> MultipleParentsException(TreeNode<T> proposedChild, TreeNode<T> proposedParent) {
+        super(String.format("The node: %s could not be added to %s since it already has a parent : %s", proposedChild, proposedParent, proposedChild.parent()));
     }
 }
