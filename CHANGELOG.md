@@ -17,6 +17,16 @@ Changelog for tree-node implementation by ghacupha
 
 ### No issue
 
+**Replaced height loop iteration with foreach call on subtrees**
+
+
+[9b62ce4d06f0187](https://github.com/ghacupha/tree-node/commit/9b62ce4d06f0187) Edwin Njeru *2018-06-05 15:48:13*
+
+**Added NodeNotFoundException and NullNodeException**
+
+
+[4bd3a25dcef06c0](https://github.com/ghacupha/tree-node/commit/4bd3a25dcef06c0) Edwin Njeru *2018-06-05 15:41:28*
+
 **Added NodeNotFoundException and NullNodeException**
 
 

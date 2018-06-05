@@ -21,6 +21,7 @@ package io.github.ghacupha.tree_node;
 import io.github.ghacupha.tree_node.util.NodeNotFoundException;
 import io.github.ghacupha.tree_node.util.NullNodeException;
 import io.github.ghacupha.tree_node.util.TreeNodeException;
+import io.github.ghacupha.tree_node.util.UnCloneableNodeException;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;
@@ -744,10 +745,10 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
         }
         int level = 0;
         TreeNode<T> node = this;
-        do {
+        while (!node.isRoot()) {
             node = node.parent();
             level++;
-        } while (!node.isRoot());
+        }
         return level;
     }
 
@@ -762,8 +763,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
         try {
             return (TreeNode<T>) super.clone();
         } catch (CloneNotSupportedException e) {
-            String message = "Unable to clone the current tree node";
-            throw new TreeNodeException(message, e);
+            throw new UnCloneableNodeException(e);
         }
     }
 
@@ -965,6 +965,8 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
          * exception if so
          */
         private void checkForConcurrentModification() {
+
+            // really clever code
             if (expectedSize != size()) {
                 throw new ConcurrentModificationException();
             }
