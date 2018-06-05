@@ -17,6 +17,8 @@
  */
 package io.github.ghacupha.tree_node;
 
+import io.github.ghacupha.tree_node.util.TreeNodeException;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;

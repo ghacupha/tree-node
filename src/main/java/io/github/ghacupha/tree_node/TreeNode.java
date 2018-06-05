@@ -18,6 +18,8 @@
 package io.github.ghacupha.tree_node;
 
 
+import io.github.ghacupha.tree_node.util.TreeNodeException;
+
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -33,7 +35,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
 
-import static io.github.ghacupha.tree_node.TreeNodeUtils.ensureSingleParent;
+import static io.github.ghacupha.tree_node.util.TreeNodeUtils.ensureSingleParent;
 
 /**
  * This interface represents the basic tree data structure

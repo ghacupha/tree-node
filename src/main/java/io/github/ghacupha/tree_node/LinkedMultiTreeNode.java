@@ -18,6 +18,8 @@
 package io.github.ghacupha.tree_node;
 
 
+import io.github.ghacupha.tree_node.util.TreeNodeException;
+
 import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;

@@ -17,6 +17,7 @@
  */
 package io.github.ghacupha.tree_node;
 
+import io.github.ghacupha.tree_node.util.TreeNodeException;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -19,7 +19,7 @@ package io.github.ghacupha.tree_node.multinode;
 
 import io.github.ghacupha.tree_node.MultiTreeNode;
 import io.github.ghacupha.tree_node.TreeNode;
-import io.github.ghacupha.tree_node.TreeNodeException;
+import io.github.ghacupha.tree_node.util.TreeNodeException;
 import io.github.ghacupha.tree_node.TreeNodeTest;
 import org.junit.Test;
 
