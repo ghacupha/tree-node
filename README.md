@@ -1,6 +1,7 @@
 # Tree Data Structure Java Library
 
-[![Build Status](https://travis-ci.org/Scalified/tree.svg)](https://travis-ci.org/Scalified/tree)
+[![Build Status](https://travis-ci.org/ghacupha/tree-node.svg)](https://travis-ci.org/ghacupha/tree-node)
+[![](https://jitpack.io/v/ghacupha/tree-node.svg)](https://jitpack.io/#ghacupha/tree-node)
 
 ## Description
 
@@ -445,7 +446,8 @@ implementation based on the leftmost-child-right-sibling representation
 ## License
 
 ```
-  tree-node - Implementation of tree structures in java
+      tree-node - Implementation of tree structures in java
+
       Copyright © 2018 Edwin Njeru (mailnjeru@gmail.com)
 
       This program is free software: you can redistribute it and/or modify
