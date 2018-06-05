@@ -388,7 +388,7 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
     @SuppressWarnings("unchecked")
     @Override
     public void traversePreOrder(TraversalAction<TreeNode<T>> action) {
-        if (!action.isCompleted()) {
+        if (action.isIncomplete()) {
             action.perform(this);
             if (!isLeaf()) {
                 IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) subtrees[i]).forEachOrdered(subtree -> subtree.traversePreOrder(action));
@@ -409,7 +409,7 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
     @SuppressWarnings("unchecked")
     @Override
     public void traversePostOrder(TraversalAction<TreeNode<T>> action) {
-        if (!action.isCompleted()) {
+        if (action.isIncomplete()) {
             if (!isLeaf()) {
                 IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) subtrees[i]).forEachOrdered(subtree -> subtree.traversePostOrder(action));
             }

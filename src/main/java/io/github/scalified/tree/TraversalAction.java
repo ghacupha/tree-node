@@ -35,9 +35,9 @@ public interface TraversalAction<T extends TreeNode> {
     /**
      * Checks whether the traversal is completed and no more required
      *
-     * @return {@code true} if traversal is completed and no more required,
+     * @return {@code false} if traversal is completed and no more required,
      * {@code false} otherwise
      */
-    boolean isCompleted();
+    boolean isIncomplete();
 
 }

@@ -328,7 +328,7 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public void traversePreOrder(TraversalAction<TreeNode<T>> action) {
-        if (!action.isCompleted()) {
+        if (action.isIncomplete()) {
             action.perform(this);
             if (!isLeaf()) {
                 LinkedMultiTreeNode<T> nextNode = leftMostNode;
@@ -352,7 +352,7 @@ public class LinkedMultiTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public void traversePostOrder(TraversalAction<TreeNode<T>> action) {
-        if (!action.isCompleted()) {
+        if (action.isIncomplete()) {
             if (!isLeaf()) {
                 LinkedMultiTreeNode<T> nextNode = leftMostNode;
                 while (nextNode != null) {

@@ -137,8 +137,8 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
             }
 
             @Override
-            public boolean isCompleted() {
-                return false;
+            public boolean isIncomplete() {
+                return true;
             }
         };
     }
@@ -354,8 +354,8 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
             }
 
             @Override
-            public boolean isCompleted() {
-                return searchedNode[0] != null;
+            public boolean isIncomplete() {
+                return searchedNode[0] == null;
             }
         });
         return searchedNode[0];
@@ -384,8 +384,8 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
             }
 
             @Override
-            public boolean isCompleted() {
-                return false;
+            public boolean isIncomplete() {
+                return true;
             }
         });
         return searchedNodes;
@@ -497,7 +497,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      *               node, while traversing the tree
      */
     public void traversePreOrder(TraversalAction<TreeNode<T>> action) {
-        if (!action.isCompleted()) {
+        if (action.isIncomplete()) {
             action.perform(this);
             if (!isLeaf()) {
                 subtrees().forEach(subtree -> subtree.traversePreOrder(action));
@@ -514,7 +514,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      *               node, while traversing the tree
      */
     public void traversePostOrder(TraversalAction<TreeNode<T>> action) {
-        if (!action.isCompleted()) {
+        if (action.isIncomplete()) {
             if (!isLeaf()) {
                 subtrees().forEach(subtree -> subtree.traversePostOrder(action));
             }
@@ -697,8 +697,8 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
             }
 
             @Override
-            public boolean isCompleted() {
-                return false;
+            public boolean isIncomplete() {
+                return true;
             }
         };
         traversePreOrder(action);
@@ -809,8 +809,8 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
             }
 
             @Override
-            public boolean isCompleted() {
-                return false;
+            public boolean isIncomplete() {
+                return true;
             }
         };
         traversePreOrder(action);

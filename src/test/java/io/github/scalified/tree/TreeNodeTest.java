@@ -542,8 +542,8 @@ public abstract class TreeNodeTest {
 			}
 
 			@Override
-			public boolean isCompleted() {
-				return false;
+			public boolean isIncomplete() {
+				return true;
 			}
 		};
 	}
