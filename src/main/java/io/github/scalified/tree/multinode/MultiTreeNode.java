@@ -86,7 +86,7 @@ public abstract class MultiTreeNode<T> extends TreeNode<T> {
             String message = String.format("Unable to find the siblings. The tree node %1$s is root", root());
             throw new TreeNodeException(message);
         }
-        Collection<? extends TreeNode<T>> parentSubtrees = parent.subtrees();
+        Collection<? extends TreeNode<T>> parentSubtrees = super.parent().subtrees();
         int parentSubtreesSize = parentSubtrees.size();
         if (parentSubtreesSize == 1) {
             return Collections.emptySet();

@@ -98,7 +98,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
     /**
      * Reference to the parent tree node. Is {@code null} if the current tree node is root
      */
-    protected TreeNode<T> parent;
+    private TreeNode<T> parent;
 
     /**
      * Data store in the current tree node

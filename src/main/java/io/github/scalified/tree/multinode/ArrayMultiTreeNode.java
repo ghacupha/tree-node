@@ -278,7 +278,7 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
             @Override
             @SuppressWarnings("unchecked")
             protected TreeNode<T> rightSiblingNode() {
-                ArrayMultiTreeNode<T> mParent = (ArrayMultiTreeNode<T>) parent;
+                ArrayMultiTreeNode<T> mParent = (ArrayMultiTreeNode<T>) ArrayMultiTreeNode.super.parent();
                 int rightSiblingNodeIndex = mParent.indexOf(ArrayMultiTreeNode.this) + 1;
                 return rightSiblingNodeIndex < mParent.subtreesSize ? (TreeNode<T>) mParent.subtrees[rightSiblingNodeIndex] : null;
             }
@@ -486,7 +486,7 @@ public class ArrayMultiTreeNode<T> extends MultiTreeNode<T> {
             String message = String.format("Unable to find the siblings. The tree node %1$s is root", root());
             throw new TreeNodeException(message);
         }
-        ArrayMultiTreeNode<T> mParent = (ArrayMultiTreeNode<T>) parent;
+        ArrayMultiTreeNode<T> mParent = (ArrayMultiTreeNode<T>) super.parent();
         int parentSubtreesSize = mParent.subtreesSize;
         if (parentSubtreesSize == 1) {
             return Collections.emptySet();
