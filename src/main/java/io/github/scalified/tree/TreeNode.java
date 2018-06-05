@@ -15,9 +15,6 @@
  */
 package io.github.scalified.tree;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-
 import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -25,7 +22,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -578,7 +574,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
             String message = String.format(errorMessage + "Current node %1$s is root", descendant);
             throw new TreeNodeException(message);
         }
-        List<TreeNode<T>> path = Lists.newCopyOnWriteArrayList();
+        List<TreeNode<T>> path = new CopyOnWriteArrayList<>();
         TreeNode<T> node = descendant;
         path.add(node);
         do {
