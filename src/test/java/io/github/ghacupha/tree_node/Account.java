@@ -17,27 +17,43 @@
  */
 package io.github.ghacupha.tree_node;
 
-/**
- * An interface, which defines the action to perform while traversing
- * the tree
- *
- * @param <T> Type of data being carried in the node
- */
-public interface TraversalAction<T extends TreeNode> {
+public class Account {
 
-    /**
-     * Is called on each node, while traversing the tree
-     *
-     * @param node reference to the current node during tree traversal
-     */
-    void perform(T node);
+    private String name;
 
-    /**
-     * Checks whether the traversal is completed and no more required
-     *
-     * @return {@code false} if traversal is completed and no more required,
-     * {@code false} otherwise
-     */
-    boolean isIncomplete();
+    public Account(String name) {
+        this.name = name;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Account account = (Account) o;
+
+        return name != null ? name.equals(account.name) : account.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
+    }
 }

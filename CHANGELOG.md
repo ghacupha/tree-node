@@ -17,6 +17,21 @@ Changelog for tree-node implementation by ghacupha
 
 ### No issue
 
+**Enhanced parameter definition for MultipleParentsException**
+
+
+[24c78dfa6688fa6](https://github.com/ghacupha/tree-node/commit/24c78dfa6688fa6) Edwin Njeru *2018-06-05 14:27:46*
+
+**created utils package**
+
+
+[ef8ee88a76d66b6](https://github.com/ghacupha/tree-node/commit/ef8ee88a76d66b6) Edwin Njeru *2018-06-05 14:24:40*
+
+**Added MulitpleParentsException**
+
+
+[c93f97630942124](https://github.com/ghacupha/tree-node/commit/c93f97630942124) Edwin Njeru *2018-06-05 14:23:37*
+
 **Amended spelling mistakes in the README file**
 
 
