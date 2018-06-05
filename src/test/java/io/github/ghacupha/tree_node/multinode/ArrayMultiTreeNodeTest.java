@@ -17,6 +17,7 @@
  */
 package io.github.ghacupha.tree_node.multinode;
 
+import io.github.ghacupha.tree_node.ArrayMultiTreeNode;
 import io.github.ghacupha.tree_node.TreeNode;
 import org.junit.Test;
 

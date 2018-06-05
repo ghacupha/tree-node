@@ -1,17 +1,17 @@
 /**
  * tree-node - Implementation of tree structures in java
  * Copyright © 2018 Edwin Njeru (mailnjeru@gmail.com)
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,6 +32,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
+
+import static io.github.ghacupha.tree_node.TreeNodeUtils.ensureSingleParent;
 
 /**
  * This interface represents the basic tree data structure
@@ -153,9 +155,11 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      */
     protected static <T> void linkParent(TreeNode<T> node, TreeNode<T> parent) {
         if (node != null) {
+            ensureSingleParent(node, parent);
             node.parent = parent;
         }
     }
+
 
     /**
      * Removes the parent tree node reference link from the specified tree node

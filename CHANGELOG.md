@@ -17,6 +17,31 @@ Changelog for tree-node implementation by ghacupha
 
 ### No issue
 
+**Amended spelling mistakes in the README file**
+
+
+[f7cac737f66ce35](https://github.com/ghacupha/tree-node/commit/f7cac737f66ce35) Edwin Njeru *2018-06-05 13:22:53*
+
+**Changed directory structure to match the maven repository nomenclature**
+
+
+[589f2d1e43cd9f2](https://github.com/ghacupha/tree-node/commit/589f2d1e43cd9f2) Edwin Njeru *2018-06-05 13:19:35*
+
+**Changed directory structure to match the maven repository nomenclature**
+
+
+[582116e902fc3c4](https://github.com/ghacupha/tree-node/commit/582116e902fc3c4) Edwin Njeru *2018-06-05 13:18:46*
+
+**Ignored impl files from versioning**
+
+
+[0281f964a740b5f](https://github.com/ghacupha/tree-node/commit/0281f964a740b5f) Edwin Njeru *2018-06-05 13:16:30*
+
+**Added domain specific use case for the tree-node library**
+
+
+[b09995e10acf329](https://github.com/ghacupha/tree-node/commit/b09995e10acf329) Edwin Njeru *2018-06-05 13:15:44*
+
 **Amended CI tag in the readme file**
 
 

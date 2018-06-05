@@ -8,6 +8,7 @@
 This Library contains different implementations of the tree data structures, such as K-ary, binary, expression trees etc.
 
 ## Use Case
+
 Once upon a time I wanted to do something like this:
 
 ```java
