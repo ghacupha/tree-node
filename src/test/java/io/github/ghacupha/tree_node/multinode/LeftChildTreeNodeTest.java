@@ -17,7 +17,7 @@
  */
 package io.github.ghacupha.tree_node.multinode;
 
-import io.github.ghacupha.tree_node.LinkedMultiTreeNode;
+import io.github.ghacupha.tree_node.LeftChildTreeNode;
 import io.github.ghacupha.tree_node.TreeNode;
 
 /**
@@ -25,7 +25,7 @@ import io.github.ghacupha.tree_node.TreeNode;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class LinkedMultiTreeNodeTest extends MultiTreeNodeTest {
+public class LeftChildTreeNodeTest extends MultiTreeNodeTest {
 
 	/*
 	 * Test tree structure
@@ -46,7 +46,7 @@ public class LinkedMultiTreeNodeTest extends MultiTreeNodeTest {
 
 	@Override
 	protected <T> TreeNode<T> createTreeNode(T data) {
-		return new LinkedMultiTreeNode<>(data);
+		return new LeftChildTreeNode<>(data);
 	}
 
 }

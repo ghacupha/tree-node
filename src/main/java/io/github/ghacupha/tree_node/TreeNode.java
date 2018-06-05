@@ -723,6 +723,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      * on the longest downward path between that node and a leaf
      */
     public int height() {
+
         if (isLeaf()) {
             return 0;
         }

@@ -76,6 +76,7 @@ Once upon a time I wanted to do something like this:
 ```
 
 I would then expect the hiearchy to look something like this:
+
 ```
 
 +- Accounts
@@ -119,6 +120,7 @@ I would then expect the hiearchy to look something like this:
 |  |  +- Sundry Creditors
 
 ```
+
 Obviously that would require some serious algorithmic work maintaining such hierarchies and
 initiating their creation at runtime, only adds to the complexity. That does not mean creating them
 at compile time or at application startup (configuration) might be any cheaper.
@@ -335,13 +337,13 @@ The following code snippet shows how to build such tree:
 
 ```java
 // Creating the tree nodes
-TreeNode<String> n1 = new ArrayMultiTreeNode<>("n1");
-TreeNode<String> n2 = new ArrayMultiTreeNode<>("n2");
-TreeNode<String> n3 = new ArrayMultiTreeNode<>("n3");
-TreeNode<String> n4 = new ArrayMultiTreeNode<>("n4");
-TreeNode<String> n5 = new ArrayMultiTreeNode<>("n5");
-TreeNode<String> n6 = new ArrayMultiTreeNode<>("n6");
-TreeNode<String> n7 = new ArrayMultiTreeNode<>("n7");
+TreeNode<String> n1 = new ArrayTreeNode<>("n1");
+TreeNode<String> n2 = new ArrayTreeNode<>("n2");
+TreeNode<String> n3 = new ArrayTreeNode<>("n3");
+TreeNode<String> n4 = new ArrayTreeNode<>("n4");
+TreeNode<String> n5 = new ArrayTreeNode<>("n5");
+TreeNode<String> n6 = new ArrayTreeNode<>("n6");
+TreeNode<String> n7 = new ArrayTreeNode<>("n7");
 
 // Assigning tree nodes
 n1.add(n2);
@@ -358,10 +360,10 @@ Data is stored in a tree node during creation:
 
 ```java
 // Storing string data during creation
-TreeNode<String> node = new ArrayMultiTreeNode<>("data");
+TreeNode<String> node = new ArrayTreeNode<><>("data");
 
 // Null values can also be stored:
-TreeNode<String> nullNode = new ArrayMultiTreeNode<>(null);
+TreeNode<String> nullNode = new ArrayTreeNode<><>(null);
 ```
 
 Data can be changed after node creation:
@@ -401,11 +403,11 @@ TreeNode<String> parent = node.parent();
 Collection<? extends TreeNode<String>> subtrees = node.subtrees();
 
 // Checking whether the specified subtree is present
-TreeNode<String> subtreeToCheck = new ArrayMultiTreeNode<>("subtreeToCheck");
+TreeNode<String> subtreeToCheck = new ArrayTreeNode<>("subtreeToCheck");
 boolean resultHasSubtree = node.hasSubtree(subtreeToCheck);
 
 // Removing the entire subtree with all of its descendants from node
-TreeNode<String> subtreeToDrop = new ArrayMultiTreeNode<>("subtreeToDrop");
+TreeNode<String> subtreeToDrop = new ArrayTreeNode<>("subtreeToDrop");
 boolean resultDropSubtree = node.dropSubtree(subtreeToDrop);
 ```
 
@@ -413,7 +415,7 @@ boolean resultDropSubtree = node.dropSubtree(subtreeToDrop);
 
 ```java
 // Checking whether the tree node contains the specified node
-TreeNode<String> nodeToCheck = new ArrayMultiTreeNode<>("nodeToCheck");
+TreeNode<String> nodeToCheck = new ArrayTreeNode<>("nodeToCheck");
 boolean resultContains = node.contains(nodeToCheck);
 
 // Checking whether the tree node contains all of the collection's nodes
@@ -436,11 +438,11 @@ Collection<TreeNode<String>> nodesToFind = node.findAll("dataToFind");
 
 ```java
 // Adding new subtree / tree node
-TreeNode<String> nodeToAdd = new ArrayMultiTreeNode<>("nodeToAdd");
+TreeNode<String> nodeToAdd = new ArrayTreeNode<>("nodeToAdd");
 node.add(nodeToAdd);
 
 // Removing the tree node from entire tree
-TreeNode<String> nodeToRemove = new ArrayMultiTreeNode<>("nodeToRemove");
+TreeNode<String> nodeToRemove = new ArrayTreeNode<>("nodeToRemove");
 boolean resultRemove = node.remove(nodeToRemove);
 
 // Removing all of the tree nodes specified in the collection from the entire tree
@@ -517,23 +519,23 @@ Collection<? extends TreeNode<String>> postOrderedCollection = node.postOrdered(
 boolean nodeIsLeaf = node.isLeaf();
 
 // Retrieving the collection of nodes, which connect the current node with its descendants
-TreeNode<String> descendant = new ArrayMultiTreeNode<>("descendant");
+TreeNode<String> descendant = new ArrayTreeNode<>("descendant");
 Collection<? extends TreeNode<String>> path = node.path(descendant);
 
 // Getting the common ancestor
-TreeNode<String> anotherNode = new ArrayMultiTreeNode<>("anotherNode");
+TreeNode<String> anotherNode = new ArrayTreeNode<>("anotherNode");
 TreeNode<String> commonAncestor = node.commonAncestor(anotherNode);
 
 // Checking whether the node is the sibling of the current node
-TreeNode<String> sibling = new ArrayMultiTreeNode<>("sibling");
+TreeNode<String> sibling = new ArrayTreeNode<>("sibling");
 boolean nodeIsSibling = node.isSiblingOf(sibling);
 
 // Checking whether the current node is ancestor of another node
-TreeNode<String> anotherDescendantNode = new ArrayMultiTreeNode<>("anotherDescendantNode");
+TreeNode<String> anotherDescendantNode = new ArrayTreeNode<>("anotherDescendantNode");
 boolean nodeIsAncestor = node.isAncestorOf(anotherDescendantNode);
 
 // Checking whether the current node is descendant of another node
-TreeNode<String anotherAncestorNode = new ArrayMultiTreeNode<>("anotherAncestorNode");
+TreeNode<String anotherAncestorNode = new ArrayTreeNode<>("anotherAncestorNode");
 boolean nodeIsDescendant = node.isDescendantOf(anotherAncestorNode);
 
 // Getting the size of entire tree including the current tree node
@@ -573,12 +575,12 @@ boolean resultRemoveSubtrees = node.removeSubtrees(collectionToRemove);
 
 K-ary (multi node) trees are represented by **MultiTreeNode** interface and have 2 implementations:
 
-* [**ArrayMultiTreeNode**](https://github.com/Scalified/tree/blob/master/tree/src/main/java/com/scalified/tree/multinode/ArrayMultiTreeNode.java) - 
+* [**ArrayTreeNode**](https://github.com/Scalified/tree/blob/master/tree/src/main/java/com/scalified/tree/multinode/ArrayMultiTreeNode.java) -
 implementation based on the array-of-pointers representation
-* [**LinkedMultiTreeNode**](https://github.com/Scalified/tree/blob/master/tree/src/main/java/com/scalified/tree/multinode/LinkedMultiTreeNode.java) -
+* [**LeftChildTreeNode**](https://github.com/Scalified/tree/blob/master/tree/src/main/java/com/scalified/tree/multinode/LinkedMultiTreeNode.java) -
 implementation based on the leftmost-child-right-sibling representation
 
-**LinkedMultiTreeNode** is better optimized for trees with many nodes, whereas **ArrayMultiTreeNode** is better for large node trees
+**LeftChildTreeNode** is better optimized for trees with many nodes, whereas **ArrayTreeNode** is better for large node trees
 
 ## License
 

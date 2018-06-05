@@ -17,7 +17,7 @@
  */
 package io.github.ghacupha.tree_node.multinode;
 
-import io.github.ghacupha.tree_node.ArrayMultiTreeNode;
+import io.github.ghacupha.tree_node.ArrayTreeNode;
 import io.github.ghacupha.tree_node.TreeNode;
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ import org.junit.Test;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class ArrayMultiTreeNodeTest extends MultiTreeNodeTest {
+public class ArrayTreeNodeTest extends MultiTreeNodeTest {
 
 	/*
 	 * Test tree structure
@@ -47,11 +47,11 @@ public class ArrayMultiTreeNodeTest extends MultiTreeNodeTest {
 
 	@Override
 	protected <T> TreeNode<T> createTreeNode(T data) {
-		return new ArrayMultiTreeNode<>(data);
+		return new ArrayTreeNode<>(data);
 	}
 
 	/*private static <T> TreeNode<T> createTreeNode(T data, int branchingFactor) {
-		return new ArrayMultiTreeNode<>(data, branchingFactor);
+		return new ArrayTreeNode<>(data, branchingFactor);
 	}*/
 
 	@Test(expected = IllegalArgumentException.class)
@@ -60,7 +60,7 @@ public class ArrayMultiTreeNodeTest extends MultiTreeNodeTest {
 
 		//createTreeNode(ROOT_DATA, incorrectBranchingFactor);
 
-		new ArrayMultiTreeNode<>(ROOT_DATA, incorrectBranchingFactor);
+		new ArrayTreeNode<>(ROOT_DATA, incorrectBranchingFactor);
 	}
 
 }
