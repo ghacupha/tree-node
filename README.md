@@ -580,7 +580,9 @@ implementation based on the array-of-pointers representation
 * [**LeftChildTreeNode**](https://github.com/Scalified/tree/blob/master/tree/src/main/java/com/scalified/tree/multinode/LinkedMultiTreeNode.java) -
 implementation based on the leftmost-child-right-sibling representation
 
-**LeftChildTreeNode** is better optimized for trees with many nodes, whereas **ArrayTreeNode** is better for large node trees
+**LeftChildTreeNode** is more space-efficient than a ArrayTreeNode, at a cost of slower index lookups.
+Its best, where memory efficiency is a concern and/or random access of a node's children is not required.
+The **ArrayTreeNode** is okay for most other use cases.
 
 ## License
 
