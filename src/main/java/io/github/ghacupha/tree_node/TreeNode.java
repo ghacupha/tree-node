@@ -18,6 +18,8 @@
 package io.github.ghacupha.tree_node;
 
 
+import io.github.ghacupha.tree_node.util.NodeNotFoundException;
+import io.github.ghacupha.tree_node.util.NullNodeException;
 import io.github.ghacupha.tree_node.util.TreeNodeException;
 
 import javax.annotation.Nonnull;
@@ -585,13 +587,13 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
         List<TreeNode<T>> path = new CopyOnWriteArrayList<>();
         TreeNode<T> node = descendant;
         path.add(node);
-        do {
+        while (!node.isRoot()) {
             node = node.parent();
             path.add(0, node);
             if (this.equals(node)) {
                 return path;
             }
-        } while (!node.isRoot());
+        }
         String message = String.format(errorMessage + "The specified tree node %1$s is not the descendant of tree node %2$s", descendant, this);
         throw new TreeNodeException(message);
     }
@@ -608,14 +610,12 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      *                           nodes either the current one or the specified one is root
      */
     public TreeNode<T> commonAncestor(TreeNode<T> node) {
-        String errorMessage = "Unable to find the common ancestor between tree nodes. ";
+        String errorMessage = "Unable to find the common ancestor between tree nodes: ";
         if (node == null) {
-            String message = errorMessage + "The specified tree node is null";
-            throw new TreeNodeException(message);
+            throw new NullNodeException(errorMessage);
         }
         if (!this.root().contains(node)) {
-            String message = String.format(errorMessage + "The specified tree node %1$s was not found in the current tree node %2$s", node, this);
-            throw new TreeNodeException(message);
+            throw new NodeNotFoundException(errorMessage,this,node);
         }
         if (this.isRoot() || node.isRoot()) {
             String message = String.format(errorMessage + "The tree node %1$s is root", this.isRoot() ? this : node);

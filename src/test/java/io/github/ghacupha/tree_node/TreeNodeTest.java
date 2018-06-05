@@ -17,6 +17,8 @@
  */
 package io.github.ghacupha.tree_node;
 
+import io.github.ghacupha.tree_node.util.NodeNotFoundException;
+import io.github.ghacupha.tree_node.util.NullNodeException;
 import io.github.ghacupha.tree_node.util.TreeNodeException;
 import org.junit.Before;
 import org.junit.Test;
@@ -613,13 +615,13 @@ public abstract class TreeNodeTest {
 		assertEquals(message, root, node2.commonAncestor(node2));
 	}
 
-	@Test(expected = TreeNodeException.class)
+	@Test(expected = NullNodeException.class)
 	public void testCommonAncestorNullNodeException() {
 		// Test common ancestor of the current tree node and null node throws exception
 		node1.commonAncestor(null);
 	}
 
-	@Test(expected = TreeNodeException.class)
+	@Test(expected = NodeNotFoundException.class)
 	public void testCommonAncestorNonExistentNodeException() {
 		// Test common ancestor of the current tree node and non existent tree node throws exception
 		assertFalse(root.contains(anotherNode));
@@ -632,7 +634,7 @@ public abstract class TreeNodeTest {
 		root.commonAncestor(node1);
 	}
 
-	@Test(expected = TreeNodeException.class)
+	@Test(expected = NodeNotFoundException.class)
 	public void testCommonAncestorNodeIsRootException() {
 		// Test common ancestor of the non root tree node and the root tree node trows exception
 		node2.commonAncestor(root);
