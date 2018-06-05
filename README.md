@@ -7,6 +7,122 @@
 
 This Library contains different implementations of the tree data structures, such as K-ary, binary, expression trees etc.
 
+## Use Case
+Once upon a time I wanted to do something like this:
+
+```java
+        accounts.add(assetAccount);
+
+        // Add major asset categories
+        assetAccount.add(currentAccount);
+        assetAccount.add(nonCurrentAccount);
+
+        // Add major current account categories
+        currentAccount.add(cashAccount);
+        currentAccount.add(savingsAccount);
+        currentAccount.add(treasuryBond);
+        currentAccount.add(mpesaAccount);
+
+        // Add major non-current account categories
+        nonCurrentAccount.add(termDeposit);
+        nonCurrentAccount.add(sharesAccount);
+        nonCurrentAccount.add(taxRecoverable);
+        nonCurrentAccount.add(sundryDebtors);
+        nonCurrentAccount.add(fixedAssets);
+
+        // Add types of fixed assets account
+        fixedAssets.add(furnitureAndFittings);
+        fixedAssets.add(electronicEquipment);
+        fixedAssets.add(computers);
+        fixedAssets.add(landAndBuildings);
+        fixedAssets.add(officeRenovations);
+        fixedAssets.add(motorVehicles);
+        fixedAssets.add(computerSoftware);
+
+        // Add shares account
+        sharesAccount.add(investment1);
+        sharesAccount.add(investment2);
+        sharesAccount.add(investment3);
+        sharesAccount.add(investment4);
+
+        // Add another major type of account
+        accounts.add(liabilityAccount);
+
+        // Add major tyep of liability account
+        liabilityAccount.add(sundryCreditors);
+
+        // Add service outlet hierarchy to computers account
+        computers.add(financeDeptComputers);
+        computers.add(creditDeptComputers);
+        computers.add(marketingDeptComputers);
+        computers.add(ceoDeptComputers);
+        computers.add(payablesDeptComputers);
+
+        // Add service outlet hierarchy to electronic equipment account
+        electronicEquipment.add(financeDeptElectronicEquipment);
+        electronicEquipment.add(creditDeptElectronicEquipment);
+        electronicEquipment.add(marketingDeptElectronicEquipment);
+        electronicEquipment.add(ceoDeptElectronicEquipment);
+        electronicEquipment.add(payablesDeptElectronicEquipment);
+
+        // Add service outlet hierarchy to motor vehicles account
+        motorVehicles.add(financeDeptMotorVehicles);
+        motorVehicles.add(gmdDeptMotorVehicles);
+        motorVehicles.add(ceoDeptMotorVehicles);
+
+        // Print account hierarchy
+        System.out.println(accounts.toString());
+```
+
+I would then expect the hiearchy to look something like this:
+```
+
++- Accounts
+|  +- Asset Account
+|  |  +- Current Account
+|  |  |  +- Cash Account
+|  |  |  +- Savings Account
+|  |  |  +- T-Bond
+|  |  |  +- Mpesa Account
+|  |  +- Non Current Account
+|  |  |  +- Term Deposit
+|  |  |  +- Shares Account
+|  |  |  |  +- Investment1
+|  |  |  |  +- Investment2
+|  |  |  |  +- Investment3
+|  |  |  |  +- Investment4
+|  |  |  +- Tax Recoverable
+|  |  |  +- Sundry Debtors
+|  |  |  +- Fixed Assets
+|  |  |  |  +- Furniture And Fittings
+|  |  |  |  +- Electronic Equipment
+|  |  |  |  |  +- Finance Dept Electronic Equipment
+|  |  |  |  |  +- Credit Dept Electronic Equipment
+|  |  |  |  |  +- Marketing Dept Electronic Equipment
+|  |  |  |  |  +- Ceo Dept Electronic Equipment
+|  |  |  |  |  +- Payables Dept Electronic Equipment
+|  |  |  |  +- Computers
+|  |  |  |  |  +- Finance Dept Computers
+|  |  |  |  |  +- Credit Dept Computers
+|  |  |  |  |  +- Marketing Dept Computers
+|  |  |  |  |  +- Ceo Dept Computers
+|  |  |  |  |  +- Payables Dept Computers
+|  |  |  |  +- Land and Buildings
+|  |  |  |  +- Office Renovations
+|  |  |  |  +- Motor Vehicles
+|  |  |  |  |  +- Finance Dept Motor Vehicles
+|  |  |  |  |  +- Gmd Dept Motor Vehicles
+|  |  |  |  |  +- Ceo Dept Motor Vehicles
+|  |  |  |  +- Computer Software
+|  +- Liability Account
+|  |  +- Sundry Creditors
+
+```
+Obviosly that would require some serious algorithmic work maintaining such hiearachies and
+managing their creation at runtime, only adds to the complexity. That does not mean creating them
+at compile time or at application startup (configuration) might be any cheaper.
+It would be much later that I stumbled on use of a specific type of a graph. Trees.
+
 ## Requirements
 
 The Library requires Java SE Development Kit 8 or higher
