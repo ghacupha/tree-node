@@ -17,6 +17,11 @@ Changelog for tree implementation by ghacupha
 
 ### No issue
 
+**fixed minor peculiarities in the Readme file**
+
+
+[e7097948edfbede](https://github.com/ghacupha/tree/commit/e7097948edfbede) Edwin Njeru *2018-06-05 06:18:50*
+
 **Updated license from Apache version 2 to LGPL version 3**
 
 
