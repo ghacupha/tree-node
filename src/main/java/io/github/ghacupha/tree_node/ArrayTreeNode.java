@@ -17,6 +17,7 @@
  */
 package io.github.ghacupha.tree_node;
 
+import io.github.ghacupha.tree_node.TreeNode.TreeNodeIterator;
 import io.github.ghacupha.tree_node.util.TreeNodeException;
 
 import javax.annotation.Nonnull;
@@ -248,8 +249,8 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     @Nonnull
-    public TreeNode.TreeNodeIterator iterator() {
-        return new TreeNode.TreeNodeIterator() {
+    public TreeNodeIterator iterator() {
+        return new TreeNodeIterator() {
 
             /**
              * Returns the leftmost node of the current tree node if the
