@@ -723,11 +723,11 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
         if (isLeaf()) {
             return 0;
         }
-        int height = 0;
-        for (TreeNode<T> subtree : subtrees()) {
-            height = Math.max(height, subtree.height());
-        }
-        return height + 1;
+        final int[] height = {0};
+
+        subtrees().forEach(subTree -> height[0] = Math.max(height[0], subTree.height()));
+
+        return height[0] + 1;
     }
 
     /**
