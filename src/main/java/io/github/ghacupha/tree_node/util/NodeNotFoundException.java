@@ -26,7 +26,7 @@ public class NodeNotFoundException extends RuntimeException {
 
     public <T> NodeNotFoundException(String message, TreeNode thisNode, TreeNode testNode) {
 
-        super(message + String.format(" The node: %s was not found on the root of current node : %s",testNode, thisNode.root()));
+        super(message + String.format(" The node: %s was not found on the root of current node : %s", testNode, thisNode.root()));
 
     }
 

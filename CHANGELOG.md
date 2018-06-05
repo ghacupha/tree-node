@@ -17,6 +17,21 @@ Changelog for tree-node implementation by ghacupha
 
 ### No issue
 
+**Added NodeNotFoundException and NullNodeException**
+
+
+[10809e2e31fba9b](https://github.com/ghacupha/tree-node/commit/10809e2e31fba9b) Edwin Njeru *2018-06-05 15:39:05*
+
+**Replaced parameters with diamond operators**
+
+
+[5445b9b1bb13456](https://github.com/ghacupha/tree-node/commit/5445b9b1bb13456) Edwin Njeru *2018-06-05 14:59:18*
+
+**Additional tests to coverMultipleParentsException**
+
+
+[2307065a8eaf9f8](https://github.com/ghacupha/tree-node/commit/2307065a8eaf9f8) Edwin Njeru *2018-06-05 14:49:01*
+
 **Enhanced parameter definition for MultipleParentsException**
 
 

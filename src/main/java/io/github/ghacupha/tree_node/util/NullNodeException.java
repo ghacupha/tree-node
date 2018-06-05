@@ -31,7 +31,7 @@ public class NullNodeException extends RuntimeException {
      *                later retrieval by the {@link #getMessage()} method.
      */
     public NullNodeException(String message) {
-        super(message+" The specified node is Null");
+        super(message + " The specified node is Null");
     }
 
     /**

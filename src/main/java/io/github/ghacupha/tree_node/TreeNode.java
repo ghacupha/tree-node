@@ -615,7 +615,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
             throw new NullNodeException(errorMessage);
         }
         if (!this.root().contains(node)) {
-            throw new NodeNotFoundException(errorMessage,this,node);
+            throw new NodeNotFoundException(errorMessage, this, node);
         }
         if (this.isRoot() || node.isRoot()) {
             String message = String.format(errorMessage + "The tree node %1$s is root", this.isRoot() ? this : node);
