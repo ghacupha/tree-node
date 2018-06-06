@@ -150,7 +150,7 @@ The library can be installed through maven
 <dependency>
  <groupId>com.github.ghacupha</groupId>
  <artifactId>tree-node</artifactId>
- <version>0.0.1</version>
+ <version>0.0.4</version>
 </dependency>
 
 ```
@@ -161,6 +161,17 @@ Or built from source and pushed into the local repository
    cd tree-node
    mvn package
    mvn install
+```
+
+You could then add to your project by adding it to your dependencies like this:
+```xml
+<dependencies>
+ <dependency>
+  <groupId>com.github.ghacupha</groupId>
+  <artifactId>tree-node</artifactId>
+  <version>0.0.4</version>
+ </dependency>
+<dependencies>
 ```
 
 ## Theory
