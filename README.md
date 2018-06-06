@@ -613,4 +613,6 @@ The **ArrayTreeNode** is okay for most other use cases.
 ## Acknowledgements
 
 * Heavily Inspired by [Scalified](https://github.com/Scalified/tree). In fact the better part of this README file comes
-from that project
+from that project. Only problem I had with it, is that I am a maven guy, given to liberal use of ibraries, in way I suspect
+the contributors have not envisioned for that project. By all means give it a try, if you want minimal dependencies for your
+project.
