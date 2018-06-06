@@ -79,6 +79,7 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
         super(data);
         this.branchingFactor = DEFAULT_BRANCHING_FACTOR;
         this.subtrees = new Object[branchingFactor];
+        log.debug("ArrayNode subtree created with data: {} and branching factor of {}", data, this.branchingFactor);
     }
 
     /**
@@ -96,6 +97,7 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
         }
         this.branchingFactor = branchingFactor;
         this.subtrees = new Object[branchingFactor];
+        log.debug("ArrayNode subtree created with data: {} and branching factor of {}", data, branchingFactor);
     }
 
     /**
@@ -116,6 +118,7 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
         }
         Collection<TreeNode<T>> subtrees =
             IntStream.range(0, subtreesSize).mapToObj(i -> (TreeNode<T>) this.subtrees[i]).collect(Collectors.toCollection(() -> Collections.synchronizedSet(new LinkedHashSet<>(subtreesSize))));
+        log.debug("Returning collection of {} subtrees", subtrees.size());
         return subtrees;
     }
 
@@ -133,6 +136,7 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public boolean add(TreeNode<T> subtree) {
+        log.debug("Adding subtree {} to {} \n\n", subtree, this);
         if (subtree == null) {
             return false;
         }
@@ -150,6 +154,7 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
      * @param minSubtreesCapacity the desired minimum subtrees capacity
      */
     private void ensureSubtreesCapacity(int minSubtreesCapacity) {
+        log.debug("Checking if tree can handle the capacity of {}", minSubtreesCapacity);
         if (minSubtreesCapacity > subtrees.length) {
             increaseSubtreesCapacity(minSubtreesCapacity);
         }
@@ -164,6 +169,7 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
      */
     private void increaseSubtreesCapacity(int minSubtreesCapacity) {
         int oldSubtreesCapacity = subtrees.length;
+        log.debug("Increasing subtrees capacity from {} to {}", oldSubtreesCapacity, minSubtreesCapacity);
         int newSubtreesCapacity = oldSubtreesCapacity + (oldSubtreesCapacity >> 1);
         if (newSubtreesCapacity < minSubtreesCapacity) {
             newSubtreesCapacity = minSubtreesCapacity;
@@ -190,6 +196,7 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public boolean dropSubtree(TreeNode<T> subtree) {
+        log.debug("Dropping subtree {} from node {} \n\n", subtree, this);
         if (subtree == null || isLeaf() || subtree.isRoot()) {
             return false;
         }
@@ -218,7 +225,7 @@ public class ArrayTreeNode<T> extends MultiTreeNode<T> {
      */
     @SuppressWarnings("unchecked")
     private int indexOf(TreeNode<T> subtree) {
-        log.debug("Finding the indexOf subtree {} in node : {}", subtree, this);
+        log.debug("Finding the indexOf subtree {} in node : {} \n\n", subtree, this);
         int i = 0;
         while (i < subtreesSize) {
             TreeNode<T> mSubtree = (TreeNode<T>) subtrees[i];

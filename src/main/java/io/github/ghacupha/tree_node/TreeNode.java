@@ -316,6 +316,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      * if the current node is root
      */
     public TreeNode<T> root() {
+        log.debug("root enquiry has been raised on the node: {} \n\n", this);
         if (isRoot()) {
             return this;
         }
@@ -323,6 +324,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
         do {
             node = node.parent();
         } while (!node.isRoot());
+        log.debug("the node : {} is the root to the node : {}\n\n", node, this);
         return node;
     }
 
@@ -358,6 +360,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      */
     @SuppressWarnings("unchecked")
     public TreeNode<T> find(final T data) {
+        log.debug("Inquiry for data : {} raised on the node : {}\n\n", data, this);
         if (isLeaf()) {
             return (data() == null ? data == null : data().equals(data)) ? this : null;
         }
@@ -375,6 +378,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
                 return searchedNode[0] == null;
             }
         });
+        log.debug("Data {} has been found on the node : {}\n\n", data, this);
         return searchedNode[0];
     }
 
@@ -434,6 +438,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      * otherwise
      */
     public boolean contains(TreeNode<T> node) {
+        log.debug("Checking if the node: {} contains the node: {}\n\n", this, node);
         if (node == null || isLeaf() || node.isRoot()) {
             return false;
         }
@@ -583,6 +588,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      *                           specified tree node is root
      */
     public Collection<? extends TreeNode<T>> path(TreeNode<T> descendant) {
+        log.debug("Path query for the descendant :{} from the node {}\n\n", descendant, this);
         if (descendant == null || isLeaf() || this.equals(descendant)) {
             return Collections.singletonList(this);
         }
@@ -617,6 +623,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      *                           nodes either the current one or the specified one is root
      */
     public TreeNode<T> commonAncestor(TreeNode<T> node) {
+        log.debug("Checking if the node : {} has a common ancestor with the node {} \n\n", node, this);
         String errorMessage = "Unable to find the common ancestor between tree nodes: ";
         if (node == null) {
             throw new NullNodeException(errorMessage);
@@ -647,6 +654,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      * have the same parent; {@code false} otherwise
      */
     public boolean isSiblingOf(TreeNode<T> node) {
+        log.debug("Checking if the node : {} is the sibling of the node : {}\n\n", this, node);
         return node != null && !isRoot() && !node.isRoot() && this.parent().equals(node.parent());
     }
 
@@ -659,6 +667,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      * specified; {@code false} otherwise
      */
     public boolean isAncestorOf(TreeNode<T> node) {
+        log.debug("Checking if the node: {} is the ancestor of : {}\n\n", this, node);
         if (node == null || isLeaf() || node.isRoot() || this.equals(node)) {
             return false;
         }
@@ -681,6 +690,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      * specified; {@code false} otherwise
      */
     public boolean isDescendantOf(TreeNode<T> node) {
+        log.debug("Checking if the node: {} is the descendant of : {}\n\n", this, node);
         if (node == null || this.isRoot() || node.isLeaf() || this.equals(node)) {
             return false;
         }
@@ -700,6 +710,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      * @return number of nodes in the entire tree, including the current tree node
      */
     public long size() {
+        log.debug("Checking the size of the node : {}\n\n", this);
         if (isLeaf()) {
             return 1;
         }
@@ -717,6 +728,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
             }
         };
         traversePreOrder(action);
+        log.debug("The size of the node : {}, determined to be {}\n\n", this, count[0]);
         return count[0];
     }
 
@@ -748,6 +760,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
      * one
      */
     public int level() {
+        log.debug("Checking the level of the node : {}\n\n", this);
         if (isRoot()) {
             return 0;
         }
@@ -757,6 +770,7 @@ public abstract class TreeNode<T> implements Iterable<TreeNode<T>>, Serializable
             node = node.parent();
             level++;
         }
+        log.debug("The level of the node : {} determined to be {}", this, level);
         return level;
     }
 

@@ -20,6 +20,8 @@ package io.github.ghacupha.tree_node;
 
 import io.github.ghacupha.tree_node.TreeNode.TreeNodeIterator;
 import io.github.ghacupha.tree_node.util.TreeNodeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -33,6 +35,8 @@ import java.util.LinkedHashSet;
  * @param <T> Type of data being carried in the node
  */
 public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
+
+    private static final Logger log = LoggerFactory.getLogger(LeftChildTreeNode.class);
 
     /**
      * Current UID of this object used for serialization
@@ -64,6 +68,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
      */
     public LeftChildTreeNode(T data) {
         super(data);
+        log.debug("LeftChildTreeNode created with the data : {}", data);
     }
 
     /**
@@ -88,6 +93,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
             subtrees.add(nextSubtree);
             nextSubtree = nextSubtree.rightSiblingNode;
         }
+        log.debug("Returning a collection of {} subtrees belonging to node : {}", subtrees.size(), this);
         return subtrees;
     }
 
@@ -105,6 +111,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public boolean add(TreeNode<T> subtree) {
+        log.debug("Adding the subtree : {} to the node : {}", subtree, this);
         if (subtree == null) {
             return false;
         }
@@ -132,6 +139,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public boolean dropSubtree(TreeNode<T> subtree) {
+        log.debug("Removing the subtree : {} from the node: {}\n\n", subtree, this);
         if (subtree == null || isLeaf() || subtree.isRoot()) {
             return false;
         }
@@ -162,6 +170,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public void clear() {
+        log.debug("Removing all subtrees from the node: {}\n\n", this);
         if (!isLeaf()) {
             LeftChildTreeNode<T> nextNode = leftMostNode;
             while (nextNode != null) {
@@ -243,6 +252,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public boolean hasSubtree(TreeNode<T> subtree) {
+        log.debug("Checking if the node: {} contains the node {}\n\n", this, subtree);
         if (subtree == null || isLeaf() || subtree.isRoot()) {
             return false;
         }
@@ -271,6 +281,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public boolean contains(TreeNode<T> node) {
+        log.debug("Checking if the node: {} contains the node {}\n\n", this, node);
         if (node == null || isLeaf() || node.isRoot()) {
             return false;
         }
@@ -301,6 +312,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public boolean remove(TreeNode<T> node) {
+        log.debug("Removing the node : {} from the node: {}", node, this);
         if (node == null || isLeaf() || node.isRoot()) {
             return false;
         }
@@ -329,6 +341,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public void traversePreOrder(TraversalAction<TreeNode<T>> action) {
+        log.debug("Traversing the postOrder in the node : {} \n\n", this);
         if (action.isIncomplete()) {
             action.perform(this);
             if (!isLeaf()) {
@@ -339,6 +352,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
                 }
             }
         }
+        log.debug("PostOrder traversal complete");
     }
 
     /**
@@ -353,6 +367,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public void traversePostOrder(TraversalAction<TreeNode<T>> action) {
+        log.debug("Traversing the postOrder in the node : {} \n\n", this);
         if (action.isIncomplete()) {
             if (!isLeaf()) {
                 LeftChildTreeNode<T> nextNode = leftMostNode;
@@ -363,6 +378,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
             }
             action.perform(this);
         }
+        log.debug("PostOrder traversal complete");
     }
 
     /**
@@ -376,7 +392,9 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
      */
     @Override
     public int height() {
+        log.debug("Calculating height of the node : {}\n\n", this);
         if (isLeaf()) {
+            log.trace("The node {} is leaf returning 0 \n\n", this);
             return 0;
         }
         int height = 0;
@@ -385,6 +403,7 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
             height = Math.max(height, nextNode.height());
             nextNode = nextNode.rightSiblingNode;
         }
+        log.debug("The height for the node: {} is {}\n\n", this, height + 1);
         return height + 1;
     }
 
@@ -403,21 +422,25 @@ public class LeftChildTreeNode<T> extends MultiTreeNode<T> {
     @Override
     public Collection<? extends MultiTreeNode<T>> siblings() {
         if (isRoot()) {
+            log.debug("The node {} is root, hence no siblings \n\n", this);
             String message = String.format("Unable to find the siblings. The tree node %1$s is root", root());
             throw new TreeNodeException(message);
         }
         LeftChildTreeNode<T> firstNode = ((LeftChildTreeNode<T>) parent()).leftMostNode;
         if (firstNode.rightSiblingNode == null) {
+            log.debug("The right sibling node to the node {} is null, returning empty set \n\n", this);
             return Collections.emptySet();
         }
         Collection<MultiTreeNode<T>> siblings = Collections.synchronizedSet(new LinkedHashSet<>());
         LeftChildTreeNode<T> nextNode = firstNode;
         while (nextNode != null) {
             if (!nextNode.equals(this)) {
+                log.trace("Adding node {} to collection of siblings to the node {}", nextNode, this);
                 siblings.add(nextNode);
             }
             nextNode = nextNode.rightSiblingNode;
         }
+        log.debug("Returning {} siblings to subtree: {} \n\n", siblings.size(), this);
         return siblings;
     }
 

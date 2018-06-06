@@ -17,6 +17,61 @@ Changelog for tree-node implementation by ghacupha
 
 ### No issue
 
+**Added logs to ArrayTreeNode**
+
+
+[1dad7062c2d2e05](https://github.com/ghacupha/tree-node/commit/1dad7062c2d2e05) Edwin Njeru *2018-06-05 18:31:42*
+
+**Added logging framework to the project**
+
+
+[218b2e0043b2e37](https://github.com/ghacupha/tree-node/commit/218b2e0043b2e37) Edwin Njeru *2018-06-05 18:09:44*
+
+**Imported TreeNodeIterator into the ArrayTreeNode**
+
+
+[e3656d0f74167ce](https://github.com/ghacupha/tree-node/commit/e3656d0f74167ce) Edwin Njeru *2018-06-05 17:56:08*
+
+**Imported TreeNodeIterator into the LeftChildTreeNode**
+
+
+[837bc193c4b501b](https://github.com/ghacupha/tree-node/commit/837bc193c4b501b) Edwin Njeru *2018-06-05 17:55:30*
+
+**Added attribution to scalified tree in the readme file**
+
+
+[4ec6341ce262278](https://github.com/ghacupha/tree-node/commit/4ec6341ce262278) Edwin Njeru *2018-06-05 17:49:06*
+
+**Fixed broken links in the README**
+
+
+[fc262557e486d0c](https://github.com/ghacupha/tree-node/commit/fc262557e486d0c) Edwin Njeru *2018-06-05 17:29:38*
+
+**Fixed broken links in the README**
+
+
+[87a1de01dd83f5b](https://github.com/ghacupha/tree-node/commit/87a1de01dd83f5b) Edwin Njeru *2018-06-05 16:56:18*
+
+**Initial amendment to the README**
+
+
+[912f41c86730cba](https://github.com/ghacupha/tree-node/commit/912f41c86730cba) Edwin Njeru *2018-06-05 16:37:55*
+
+**Initial amendment to the README**
+
+
+[d963ebf5bd1735c](https://github.com/ghacupha/tree-node/commit/d963ebf5bd1735c) Edwin Njeru *2018-06-05 16:28:31*
+
+**Added jetbrains annotations**
+
+
+[3a57783de4706e9](https://github.com/ghacupha/tree-node/commit/3a57783de4706e9) Edwin Njeru *2018-06-05 16:10:44*
+
+**Replaced height loop iteration with foreach call on subtrees**
+
+
+[35def961b1fbf2b](https://github.com/ghacupha/tree-node/commit/35def961b1fbf2b) Edwin Njeru *2018-06-05 16:01:59*
+
 **Replaced height loop iteration with foreach call on subtrees**
 
 
