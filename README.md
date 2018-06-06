@@ -10,7 +10,7 @@ This Library contains different implementations of the tree data structures, suc
 ## Use Case
 
 [Once](https://github.com/ghacupha/book-keeper) upon a time I wanted to create relationships between [models](https://github.com/ghacupha/book-keeper/blob/master/src/main/java/io/github/ghacupha/keeper/book/api/Account.java)
- that could exist as a runtime-generated hierarchy. It was supposed to look something like this:
+ that could exist as an hierarchy capable of runtime initialization and mutation. It was supposed to look something like this:
 
 ```java
         accounts.add(assetAccount);
