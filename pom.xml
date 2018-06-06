@@ -42,7 +42,7 @@
         <project.reporting.outputDirectory>"documentation"</project.reporting.outputDirectory>
         <changelog.template.file>${project.basedir}/config/changelog.mustache</changelog.template.file>
         <maven.compiler.fork>true</maven.compiler.fork>
-        <maven.enforcer.required.maven.version>3.5.0</maven.enforcer.required.maven.version>
+        <maven.enforcer.required.maven.version>3.2.5</maven.enforcer.required.maven.version>
         <it.skip>false</it.skip>
 
         <!--Plugin versions-->
