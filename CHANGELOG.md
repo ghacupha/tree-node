@@ -1,7 +1,7 @@
 
 Changelog for tree-node implementation by ghacupha
 
-## Unreleased
+## 0.0.4
 ### GitHub #3   
 
 **#3 ArrayIndexOutOfBounds Exception when calling rightSiblingNode()**
@@ -16,6 +16,31 @@ Changelog for tree-node implementation by ghacupha
 
 
 ### No issue
+
+**Preparing for release version 0.0.4**
+
+
+[67204a6ec60409b](https://github.com/ghacupha/tree-node/commit/67204a6ec60409b) Edwin Njeru *2018-06-06 06:47:59*
+
+**Preparing for release version 0.0.4**
+
+
+[74c119d48c228f8](https://github.com/ghacupha/tree-node/commit/74c119d48c228f8) Edwin Njeru *2018-06-06 06:47:18*
+
+**Preparing for release version 0.0.4**
+
+
+[9ace8abcbf54620](https://github.com/ghacupha/tree-node/commit/9ace8abcbf54620) Edwin Njeru *2018-06-06 06:45:09*
+
+**Preparing for release version 0.0.4**
+
+
+[71e76bb4a8527e7](https://github.com/ghacupha/tree-node/commit/71e76bb4a8527e7) Edwin Njeru *2018-06-06 06:43:36*
+
+**Added minimal logs to the main representations**
+
+
+[f9f65075c36e1d6](https://github.com/ghacupha/tree-node/commit/f9f65075c36e1d6) Edwin Njeru *2018-06-06 06:13:25*
 
 **Added logs to ArrayTreeNode**
 
