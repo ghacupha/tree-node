@@ -1,6 +1,35 @@
 
 Changelog for tree-node implementation by ghacupha
 
+## Unreleased
+### No issue
+
+**Add snaphot tag**
+
+
+[a6dad3e9caf542c](https://github.com/ghacupha/tree-node/commit/a6dad3e9caf542c) Edwin Njeru *2019-08-06 11:21:14*
+
+**Add snaphot tag**
+
+
+[5abcab78531b45d](https://github.com/ghacupha/tree-node/commit/5abcab78531b45d) Edwin Njeru *2019-08-06 11:18:51*
+
+**Add snaphot tag**
+
+
+[0cce9c77e292b48](https://github.com/ghacupha/tree-node/commit/0cce9c77e292b48) Edwin Njeru *2019-08-06 11:15:44*
+
+**Remove duplicate developer tag**
+
+
+[a51f5bf60cec64f](https://github.com/ghacupha/tree-node/commit/a51f5bf60cec64f) Edwin Njeru *2019-08-06 11:14:05*
+
+**Configure pom with release details**
+
+
+[e095b2546173e78](https://github.com/ghacupha/tree-node/commit/e095b2546173e78) Edwin Njeru *2019-08-06 10:55:49*
+
+
 ## 0.0.4
 ### GitHub #3   
 
