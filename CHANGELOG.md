@@ -4,6 +4,11 @@ Changelog for tree-node implementation by ghacupha
 ## Unreleased
 ### No issue
 
+**Fix mispelt config**
+
+
+[0c2babcce9245c3](https://github.com/ghacupha/tree-node/commit/0c2babcce9245c3) Edwin Njeru *2019-08-06 11:51:36*
+
 **Add missing licenses**
 
 
