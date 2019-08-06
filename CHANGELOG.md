@@ -4,6 +4,11 @@ Changelog for tree-node implementation by ghacupha
 ## Unreleased
 ### No issue
 
+**Add missing licenses**
+
+
+[ee6099bac31ea30](https://github.com/ghacupha/tree-node/commit/ee6099bac31ea30) Edwin Njeru *2019-08-06 11:36:02*
+
 **Configure distribution management**
 
 

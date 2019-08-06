@@ -24,7 +24,7 @@
 
     <groupId>io.github.ghacupha</groupId>
     <artifactId>tree-node</artifactId>
-    <version>1.0.1-SNAPHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>tree-node</name>
@@ -43,9 +43,8 @@
 
     <licenses>
         <license>
-            <name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>
-            <url>https://opensource.org/licenses/lgpl-3.0.html</url>
-            <distribution>repo</distribution>
+            <name>Lesser General Public License (LGPL) version 3.0</name>
+            <url>https://www.gnu.org/licenses/lgpl-3.0.txt</url>
         </license>
     </licenses>
 
