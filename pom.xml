@@ -160,7 +160,7 @@
                         <version>1.6.7</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <serverId>ossrh</serverId>
+                            <serverId>sonatype-nexus</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>false</autoReleaseAfterClose>
                             <skipStaging>true</skipStaging>
@@ -681,12 +681,5 @@
             </plugin>
         </plugins>
     </reporting>
-
-    <developers>
-        <developer>
-            <email>mailnjeru@gmail.com</email>
-            <name>Edwin Njeru</name>
-        </developer>
-    </developers>
 
 </project>
