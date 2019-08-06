@@ -4,6 +4,11 @@ Changelog for tree-node implementation by ghacupha
 ## Unreleased
 ### No issue
 
+**Configure distribution management**
+
+
+[b21d5cc51a49204](https://github.com/ghacupha/tree-node/commit/b21d5cc51a49204) Edwin Njeru *2019-08-06 11:25:06*
+
 **Add snaphot tag**
 
 
