@@ -24,7 +24,7 @@
 
     <groupId>io.github.ghacupha</groupId>
     <artifactId>tree-node</artifactId>
-    <version>1.0.0-SNAPHOT</version>
+    <version>1.0.1-SNAPHOT</version>
     <packaging>jar</packaging>
 
     <name>tree-node</name>
