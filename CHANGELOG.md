@@ -4,6 +4,11 @@ Changelog for tree-node implementation by ghacupha
 ## Unreleased
 ### No issue
 
+**Add license header in pom**
+
+
+[e8010c75891ed51](https://github.com/ghacupha/tree-node/commit/e8010c75891ed51) Edwin Njeru *2019-08-06 11:56:14*
+
 **Fix mispelt config**
 
 
